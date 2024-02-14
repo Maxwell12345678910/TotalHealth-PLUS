@@ -121,11 +121,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int deleteFood(String description){
 
         SQLiteDatabase database = this.getWritableDatabase();
-        database.delete("foods", "FoodDescription=?", new String[]{description});
 
-
-
-        return 1;
+        //Returns number of rows deleted
+        return database.delete("foods", "FoodDescription=?", new String[]{description});
     }
 
     public long insertUser(String un, String pw, String firstName, String lastName, int age, int height, int weight){
@@ -148,6 +146,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insertingResult;
     }
 
+    public int deleteUser(String un){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //Returns number of rows deleted
+        return database.delete("users", "Username=?", new String[]{un});
+    }
+
     public long insertExercise(String exerciseDescription, float calsBurnedPerMin){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -161,6 +167,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Will return number of row if successful, -1 otherwise
         return insertingResult;
+    }
+
+    public int deleteExercise(String exerciseDescription){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //Returns number of rows deleted
+        return database.delete("exercise_selections", "ExerciseDescription=?", new String[]{exerciseDescription});
     }
 
     public long insertActivity(String dateActive, String exDesc, float duration, float totalCalsBurned){
@@ -178,5 +192,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Will return number of row if successful, -1 otherwise
         return insertingResult;
+    }
+
+    public int deleteActivity(String date, String exerciseDescription){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //Returns number of rows deleted
+        return database.delete("daily_activities", "DateActive=? AND ExerciseDescription=?",
+                new String[]{date, exerciseDescription});
     }
 }
