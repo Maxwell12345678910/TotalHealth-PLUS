@@ -1,12 +1,16 @@
 package com.gamecodeschool.totalhealthplus;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public String db_name;
@@ -46,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "FoodDescription varchar(50), " +
                         "FoodCategory varchar(50), " +
                         "CaloriesPerServing int, " +
-                        "WeightPerServing(g) float);";
+                        "WeightPerServingInGrams float);";
 
         usersTableName = "users";
         createUsersTableQuery =
@@ -55,21 +59,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "FirstName varchar(50), " +
                         "LastName varchar(50), " +
                         "Age int, " +
-                        "Height(in) int, " +
-                        "Weight(lbs) int);";
+                        "HeightInInches int, " +
+                        "WeightInLbs int);";
 
         exSelectTableName = "exercise_selections";
         createExSelectTableQuery =
                 "CREATE TABLE " + exSelectTableName + "(ExerciseID int PRIMARY KEY AUTOINCREMENT, " +
                         "ExerciseDescription varchar(50), " +
-                        "CalsBurned(/min) float);";
+                        "CalsBurnedPerMin float);";
 
         activityTableName = "daily_activities";
         createActivityTableQuery =
                 "CREATE TABLE " + activityTableName + "(ActivityID int PRIMARY KEY AUTOINCREMENT, " +
                         "DateActive varchar(50), " +
                         "ExerciseDescription varchar(50), " +
-                        "Duration(min) float, " +
+                        "DurationInMin float, " +
                         "TotalCalsBurned float);";
 
         /*intakeTableName = "daily_intake";
@@ -108,7 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("FoodDescription", description);
         values.put("FoodCategory", category);
         values.put("CaloriesPerServing", calPerServ);
-        values.put("WeightPerServing(g)", weightPerServing);
+        values.put("WeightPerServingInGrams", weightPerServing);
 
         long insertingResult = database.insert("foods", null, values);
 
@@ -124,6 +128,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Returns number of rows deleted
         return database.delete("foods", "FoodDescription=?", new String[]{description});
+    }
+
+    public String selectFoods(){
+
+        SQLiteDatabase testDb = getReadableDatabase();
+        String select = "SELECT foods.* FROM foods";
+        String result = "";
+        Cursor cursor = testDb.rawQuery(select, null);
+
+        if(cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+            result = foodID + " " + foodDescription + " " + foodCategory + " " + calsPerServing + " " + weightPerServ;
+        }
+
+        return result;
     }
 
     public long insertUser(String un, String pw, String firstName, String lastName, int age, int height, int weight){
