@@ -11,12 +11,11 @@ public class MainActivity extends AppCompatActivity {
     String result = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
         databaseHelper = new DatabaseHelper(this);
-
-        databaseHelper.deleteFood("Apple");
-        result = databaseHelper.selectFoods();
+        //databaseHelper.insertExercise("running", 67);
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
 

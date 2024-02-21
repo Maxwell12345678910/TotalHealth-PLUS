@@ -44,63 +44,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db_name = "totalhealthplus.DB";
         db_version = 1;
 
+        //foods to choose from and enter
         foodTableName = "foods";
         createFoodTableQuery =
-                "CREATE TABLE " + foodTableName + "(foodID int PRIMARY KEY AUTOINCREMENT, " +
-                        "FoodDescription varchar(50), " +
-                        "FoodCategory varchar(50), " +
-                        "CaloriesPerServing int, " +
-                        "WeightPerServingInGrams float);";
+                "CREATE TABLE " + foodTableName + "(foodID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "FoodDescription VARCHAR(50), " +
+                        "FoodCategory VARCHAR(50), " +
+                        "CaloriesPerServing INT, " +
+                        "WeightPerServingInGrams FLOAT);";
 
+        //users to login
         usersTableName = "users";
         createUsersTableQuery =
-                "CREATE TABLE " + usersTableName + "(Username varchar(50) PRIMARY KEY, " +
-                        "Password varchar(50), " +
-                        "FirstName varchar(50), " +
-                        "LastName varchar(50), " +
-                        "Age int, " +
-                        "HeightInInches int, " +
-                        "WeightInLbs int);";
+                "CREATE TABLE " + usersTableName + "(Username VARCHAR(50) PRIMARY KEY, " +
+                        "Password VARCHAR(50), " +
+                        "FirstName VARCHAR(50), " +
+                        "LastName VARCHAR(50), " +
+                        "Age INT, " +
+                        "HeightInInches INT, " +
+                        "WeightInLbs INT);";
 
+        //insert exercise selections with cals burned per min
         exSelectTableName = "exercise_selections";
         createExSelectTableQuery =
-                "CREATE TABLE " + exSelectTableName + "(ExerciseID int PRIMARY KEY AUTOINCREMENT, " +
-                        "ExerciseDescription varchar(50), " +
-                        "CalsBurnedPerMin float);";
+                "CREATE TABLE " + exSelectTableName + "(ExerciseID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "ExerciseDescription VARCHAR(50), " +
+                        "CalsBurnedPerMin FLOAT);";
 
+        //record of activities that user does throughout the day
         activityTableName = "daily_activities";
         createActivityTableQuery =
-                "CREATE TABLE " + activityTableName + "(ActivityID int PRIMARY KEY AUTOINCREMENT, " +
-                        "DateActive varchar(50), " +
-                        "ExerciseDescription varchar(50), " +
-                        "DurationInMin float, " +
-                        "TotalCalsBurned float);";
+                "CREATE TABLE " + activityTableName + "(ActivityID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "DateActive date, " +
+                        "ExerciseDescription VARCHAR(50), " +
+                        "DurationInMin FLOAT, " +
+                        "TotalCalsBurned FLOAT, " +
+                        "FOREIGN KEY (ExerciseDescription) REFERENCES exercise_selections(ExerciseDescription));";
 
-        /*intakeTableName = "daily_intake";
+        //record of intake of foods that pulls from the
+        intakeTableName = "daily_intake";
         createIntakeTableQuery =
-                "CREATE TABLE " + intakeTableName + "(MealID int PRIMARY KEY AUTOINCREMENT, " +
+                "CREATE TABLE " + intakeTableName + "(IntakeID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "Date date, " +
-                        "Servings int, " +
-                        ");";*/
+                        "FoodDescription VARCHAR(50), " +
+                        "Servings INT, " +
+                        "TotalCalsIn INT, " +
+                        "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
 
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(createFoodTableQuery);
         db.execSQL(createUsersTableQuery);
         db.execSQL(createExSelectTableQuery);
         db.execSQL(createActivityTableQuery);
-        //db.execSQL(createIntakeTableQuery);
+        db.execSQL(createIntakeTableQuery);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL("DROP TABLE IF EXISTS " + foodTableName);
         db.execSQL("DROP TABLE IF EXISTS " + usersTableName);
         db.execSQL("DROP TABLE IF EXISTS " + exSelectTableName);
         db.execSQL("DROP TABLE IF EXISTS " + activityTableName);
-        //db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
+        db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
         onCreate(db);
 
     }
@@ -183,7 +194,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put("ExerciseDescription", exerciseDescription);
-        values.put("CalsBurned(/min)", calsBurnedPerMin);
+        values.put("CalsBurnedPerMin", calsBurnedPerMin);
 
         long insertingResult = database.insert("exercise_selections", null, values);
 
@@ -225,5 +236,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Returns number of rows deleted
         return database.delete("daily_activities", "DateActive=? AND ExerciseDescription=?",
                 new String[]{date, exerciseDescription});
+    }
+
+    public long insertFoodIntake(String date, String foodDescription, int servings, int totalCalsIn){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("Date", date);
+        values.put("FoodDescription", foodDescription);
+        values.put("Servings", servings);
+        values.put("TotalCalsIn", totalCalsIn);
+
+        long insertingResult = database.insert("daily_intake", null, values);
+
+        database.close();
+
+        //Will return number of row if successful, -1 otherwise
+        return insertingResult;
+    }
+
+    public int deleteIntake(String date, String foodDescription, int servings){
+
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        //Returns number of rows deleted
+        return database.delete("daily_intake", "Date=? AND FoodDescription=? AND " +
+                        "Servings=?",
+                new String[]{date, foodDescription, Integer.toString(servings)});
     }
 }
