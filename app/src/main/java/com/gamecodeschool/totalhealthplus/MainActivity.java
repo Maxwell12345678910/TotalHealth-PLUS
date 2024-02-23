@@ -15,9 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view);
         databaseHelper = new DatabaseHelper(this);
-        //databaseHelper.insertExercise("running", 67);
+        result = databaseHelper.selectUsers();
+//        databaseHelper.insertUser("username", "password", "John", "Smith",
+//                45, 72, 190);
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
+
 
 
 

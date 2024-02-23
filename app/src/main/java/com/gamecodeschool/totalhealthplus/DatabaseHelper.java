@@ -170,8 +170,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("FirstName", firstName);
         values.put("LastName", lastName);
         values.put("Age", age);
-        values.put("Height(in)", height);
-        values.put("Weight(lbs)", weight);
+        values.put("HeightInInches", height);
+        values.put("WeightInLbs", weight);
 
         long insertingResult = database.insert("users", null, values);
 
@@ -187,6 +187,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Returns number of rows deleted
         return database.delete("users", "Username=?", new String[]{un});
+    }
+
+    public String selectUsers(){
+
+        SQLiteDatabase testDb = getReadableDatabase();
+        String select = "SELECT users.* FROM users";
+        String result = "";
+        Cursor cursor = testDb.rawQuery(select, null);
+
+        if(cursor.moveToNext()){
+
+            @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex("Username"));
+            @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex("Password"));
+            @SuppressLint("Range") String firstName = cursor.getString(cursor.getColumnIndex("FirstName"));
+            @SuppressLint("Range") String lastName = cursor.getString(cursor.getColumnIndex("LastName"));
+            @SuppressLint("Range") int age = cursor.getInt(cursor.getColumnIndex("Age"));
+            @SuppressLint("Range") int height = cursor.getInt(cursor.getColumnIndex("HeightInInches"));
+            @SuppressLint("Range") int weight = cursor.getInt(cursor.getColumnIndex("WeightInLbs"));
+            result = username + " " + password + " " + firstName + " " + lastName + " " + age +
+            " " + height + " " + weight;
+        }
+
+        return result;
     }
 
     public long insertExercise(String exerciseDescription, float calsBurnedPerMin){
@@ -218,7 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put("DateActive", dateActive);
         values.put("ExerciseDescription", exDesc);
-        values.put("Duration(min)", duration);
+        values.put("DurationInMin", duration);
         values.put("TotalCalsBurned", totalCalsBurned);
 
         long insertingResult = database.insert("daily_activities", null, values);
