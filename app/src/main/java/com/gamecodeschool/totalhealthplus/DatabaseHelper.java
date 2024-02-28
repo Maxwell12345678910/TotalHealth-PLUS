@@ -212,6 +212,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public boolean checkUser(String username, String password){
+        boolean success = false;
+
+        String checkUserQuery = "SELECT * FROM users WHERE users.Username = " + username +
+                " AND users.Password = " + password + ";";
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(checkUserQuery, null);
+
+        if (cursor.moveToNext()){
+
+            @SuppressLint("Range") String usernameNew = cursor.getString(cursor.getColumnIndex("Username"));
+            @SuppressLint("Range") String passwordNew = cursor.getString(cursor.getColumnIndex("Password"));
+
+            if (username.equals(usernameNew) && password.equals(passwordNew)){
+                success = true;
+            }
+        }
+
+
+        return success;
+    }
+
     public long insertExercise(String exerciseDescription, float calsBurnedPerMin){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
