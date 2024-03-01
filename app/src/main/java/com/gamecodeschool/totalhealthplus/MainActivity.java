@@ -30,45 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        //Gets username and password views
-        usernameLoginInput = (EditText) findViewById(R.id.usernameInput2);
-        passwordLoginInput = (EditText) findViewById(R.id.passwordInput2);
-
-        //Gets login button
-        loginButton = (Button) findViewById(R.id.loginButton2);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Gets text from user inputs when login button is pressed
-                String usernameCheck = usernameLoginInput.getText().toString();
-                String passwordCheck = passwordLoginInput.getText().toString();
-                try {
-                    loginSuccess = databaseHelper.checkUser(usernameCheck, passwordCheck);
-                }
-                catch (SQLiteException e){
-                    Log.d("Error", e.getMessage());
-                }
-
-
-                if (loginSuccess){
-                    Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-
-                }
-                else {
-                    Toast.makeText(MainActivity.this, "Login failed, username or password incorrect", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-        //initialize sign up button
-        signUpButton = (Button) findViewById(R.id.signUpButton);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createUser();
-            }
-        });
+        initializeLogin();
 
     }
 
@@ -125,12 +87,62 @@ public class MainActivity extends AppCompatActivity {
                                 int heightInput = Integer.parseInt(heightInputString);
 
                                 databaseHelper.insertUser(usernameInput, passwordInput, firstNameInput, lastNameInput, ageInput, weightInput, heightInput);
+
+                                setContentView(R.layout.login_page);
+                                initializeLogin();
                             }
                         });
                     }
                 });
 
 
+            }
+        });
+    }
+
+    public void checkLogin(){
+
+        String usernameCheck = usernameLoginInput.getText().toString();
+        String passwordCheck = passwordLoginInput.getText().toString();
+        try {
+            loginSuccess = databaseHelper.checkUser(usernameCheck, passwordCheck);
+        }
+        catch (SQLiteException e){
+            Log.d("Error", e.getMessage());
+        }
+
+
+        if (loginSuccess){
+            Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+            //Go to home page
+        }
+        else {
+            Toast.makeText(MainActivity.this, "Login failed, username or password incorrect", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void initializeLogin(){
+        //Gets username and password views
+        usernameLoginInput = (EditText) findViewById(R.id.usernameInput2);
+        passwordLoginInput = (EditText) findViewById(R.id.passwordInput2);
+
+        //Gets login button
+        loginButton = (Button) findViewById(R.id.loginButton2);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkLogin();
+            }
+        });
+
+        //initialize sign up button
+        signUpButton = (Button) findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createUser();
             }
         });
     }
