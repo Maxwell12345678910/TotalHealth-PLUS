@@ -215,8 +215,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean checkUser(String username, String password){
         boolean success = false;
 
-        String checkUserQuery = "SELECT * FROM users WHERE users.Username = " + username +
-                " AND users.Password = " + password + ";";
+        String checkUserQuery = "SELECT Username, Password FROM users WHERE Username = " + "'" + username + "'" +
+                " AND Password = " + "'" + password + "'" + ";";
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(checkUserQuery, null);
