@@ -27,52 +27,53 @@ public class MainActivity extends AppCompatActivity {
 
         createUserButton1 = (Button) findViewById(R.id.createUserButton1);
 
-        createUserButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String usernameInput = usernameInputEDT.getText().toString();
-                String passwordInput = passwordInputEDT.getText().toString();
+        if (usernameInputEDT != null && passwordInputEDT != null) {
+            createUserButton1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String usernameInput = usernameInputEDT.getText().toString();
+                    String passwordInput = passwordInputEDT.getText().toString();
 
-                setContentView(R.layout.create_user_page2);
-                firstNameInputEDT = (EditText) findViewById(R.id.firstnameInput);
-                lastNameInputEDT = (EditText) findViewById(R.id.lastnameInput);
+                    setContentView(R.layout.create_user_page2);
+                    firstNameInputEDT = (EditText) findViewById(R.id.firstnameInput);
+                    lastNameInputEDT = (EditText) findViewById(R.id.lastnameInput);
 
-                String firstNameInput = firstNameInputEDT.getText().toString();
-                String lastNameInput = lastNameInputEDT.getText().toString();
+                    createUserButton2 = (Button) findViewById(R.id.createUserButton2);
 
-                createUserButton2 = (Button) findViewById(R.id.createUserButton2);
+                    createUserButton2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String firstNameInput = firstNameInputEDT.getText().toString();
+                            String lastNameInput = lastNameInputEDT.getText().toString();
 
-                createUserButton2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setContentView(R.layout.create_user_page3);
+                            setContentView(R.layout.create_user_page3);
 
-                        ageInputEDT = (EditText) findViewById(R.id.ageInput);
-                        weightInputEDT = (EditText) findViewById(R.id.weightInput);
-                        heightInputEDT = (EditText) findViewById(R.id.heightInput);
+                            ageInputEDT = (EditText) findViewById(R.id.ageInput);
+                            weightInputEDT = (EditText) findViewById(R.id.weightInput);
+                            heightInputEDT = (EditText) findViewById(R.id.heightInput);
 
-                        createUserButton3 = (Button) findViewById(R.id.createUserButton3);
+                            createUserButton3 = (Button) findViewById(R.id.createUserButton3);
 
-                        createUserButton3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String ageInputString = ageInputEDT.getText().toString();
-                                int ageInput = Integer.parseInt(ageInputString);
-                                String weightInputString = weightInputEDT.getText().toString();
-                                int weightInput = Integer.parseInt(weightInputString);
-                                String heightInputString = heightInputEDT.getText().toString();
-                                int heightInput = Integer.parseInt(heightInputString);
+                            createUserButton3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String ageInputString = ageInputEDT.getText().toString();
+                                    int ageInput = Integer.parseInt(ageInputString);
+                                    String weightInputString = weightInputEDT.getText().toString();
+                                    int weightInput = Integer.parseInt(weightInputString);
+                                    String heightInputString = heightInputEDT.getText().toString();
+                                    int heightInput = Integer.parseInt(heightInputString);
 
-                                databaseHelper.insertUser(usernameInput, passwordInput, firstNameInput, lastNameInput, ageInput, weightInput, heightInput);
-                            }
-                        });
-                    }
-                });
+                                    databaseHelper.insertUser(usernameInput, passwordInput, firstNameInput, lastNameInput, ageInput, weightInput, heightInput);
+                                }
+                            });
+                        }
+                    });
 
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
 }
