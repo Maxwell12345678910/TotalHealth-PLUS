@@ -41,12 +41,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.login_page);
 
-         //Set the initial fragment
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.flFragment, fragmentMap.get(R.id.home))
-//                    .commit();
-//        }
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -191,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             fragmentMap.put(R.id.home, new SecondFragment());
             fragmentMap.put(R.id.settings, new ThirdFragment());
 
+
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.flFragment, fragmentMap.get(R.id.home))
                     .commit();
@@ -230,4 +225,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
+    public void seeAddGoal(View view) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flFragment, new AddToFood())
+                .commit();
+    }
 }

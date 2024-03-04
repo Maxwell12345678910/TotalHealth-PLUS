@@ -59,7 +59,7 @@
         android:layout_width="235dp"
         android:layout_height="34dp"
         android:layout_marginTop="28dp"
-        android:text="Fitness Dashboard"
+        android:text="3rd"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.562"
