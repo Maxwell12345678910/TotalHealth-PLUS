@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
@@ -28,13 +28,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean loginSuccess;
 
 
-    @SuppressLint("MissingInflatedId")
-    DatabaseHelper databaseHelper;
     String result = "";
 
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeLogin();
 
-//        use db browser to view data but runnig again creates duplicates in db
+//        use db browser to view data but running again creates duplicates in db
 //        databaseHelper.insertExercise("running", 67);
         databaseHelper.insertFood("Hardboiled Egg","Protein", 70, 50);
 
@@ -110,16 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         heightInputEDT = (EditText) findViewById(R.id.heightInput);
 
                         createUserButton3 = (Button) findViewById(R.id.createUserButton3);
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment selectedFragment = fragmentMap.get(item.getItemId());
-        if (selectedFragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.flFragment, selectedFragment)
-                    .commit();
-            return true;
-        }
-        return false;
-    }
+
 
                         createUserButton3.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -145,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment selectedFragment = fragmentMap.get(item.getItemId());
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.flFragment, selectedFragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
     public void checkLogin(){
@@ -173,25 +174,29 @@ public class MainActivity extends AppCompatActivity {
         //Gets username and password views
         usernameLoginInput = (EditText) findViewById(R.id.usernameInput2);
         passwordLoginInput = (EditText) findViewById(R.id.passwordInput2);
-
-        //Gets login button
         loginButton = (Button) findViewById(R.id.loginButton2);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkLogin();
-            }
-        });
-
-        //initialize sign up button
         signUpButton = (Button) findViewById(R.id.signUpButton);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createUser();
-            }
-        });
+
+        // Check for null objects
+        if (usernameLoginInput != null && passwordLoginInput != null && loginButton != null && signUpButton != null) {
+            // Set click listeners
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    checkLogin();
+                }
+            });
+
+            signUpButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createUser();
+                }
+            });
+        } else {
+            Log.e("initializeLogin", "One or more views are null");
+        }
     }
+
 
 }
