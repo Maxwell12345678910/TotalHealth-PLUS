@@ -141,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.delete("foods", "FoodDescription=?", new String[]{description});
     }
 
+    //
     public String selectFoods(){
 
         SQLiteDatabase testDb = getReadableDatabase();
