@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_page);
+        //setContentView(R.layout.login_page);
 
         setContentView(R.layout.activity_main);
 
@@ -68,6 +68,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         result = databaseHelper.selectFoods();
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         Log.d("RESULT WAS: ", result);
+    }
+
+    public void calGoal(View v){
+        setContentView(R.layout.fragment_add_to_food);
+    }
+
+    public void backToMain(View v){
+
+        setContentView(R.layout.activity_main);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        // Initialize fragments
+        fragmentMap.put(R.id.person, new FirstFragment());
+        fragmentMap.put(R.id.home, new SecondFragment());
+        fragmentMap.put(R.id.settings, new ThirdFragment());
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flFragment, fragmentMap.get(R.id.home))
+                .commit();
     }
 
     public void createUser(){
