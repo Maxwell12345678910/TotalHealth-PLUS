@@ -38,24 +38,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.login_page);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_page);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
-
-        // Initialize fragments
-        fragmentMap.put(R.id.person, new FirstFragment());
-        fragmentMap.put(R.id.home, new SecondFragment());
-        fragmentMap.put(R.id.settings, new ThirdFragment());
-
-        // Set the initial fragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.flFragment, fragmentMap.get(R.id.home))
-                    .commit();
-        }
+         //Set the initial fragment
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.flFragment, fragmentMap.get(R.id.home))
+//                    .commit();
+//        }
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -72,6 +63,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void calGoal(View v){
         setContentView(R.layout.fragment_add_to_food);
+    }
+    public void BFood(View v){
+        setContentView(R.layout.fragment_browse_food);
+    }
+    public void PreGoals(View v){
+        setContentView(R.layout.fragment_past_goals);
     }
 
     public void backToMain(View v){
@@ -184,6 +181,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (loginSuccess){
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
             //Go to home page
+            setContentView(R.layout.activity_main);
+
+            bottomNavigationView = findViewById(R.id.bottomNavigationView);
+            bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+            // Initialize fragments
+            fragmentMap.put(R.id.person, new FirstFragment());
+            fragmentMap.put(R.id.home, new SecondFragment());
+            fragmentMap.put(R.id.settings, new ThirdFragment());
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.flFragment, fragmentMap.get(R.id.home))
+                    .commit();
         }
         else {
             Toast.makeText(MainActivity.this, "Login failed, username or password incorrect", Toast.LENGTH_LONG).show();
