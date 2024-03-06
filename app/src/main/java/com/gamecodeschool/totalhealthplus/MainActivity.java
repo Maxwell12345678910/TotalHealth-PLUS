@@ -38,12 +38,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_page);
+        databaseHelper = new DatabaseHelper(this);
+        initializeLogin();
 
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
+        if (bottomNavigationView != null)
+            bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
 
         // Initialize fragments
         fragmentMap.put(R.id.person, new FirstFragment());
@@ -57,17 +59,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .commit();
         }
 
-        databaseHelper = new DatabaseHelper(this);
-
-        initializeLogin();
-
-//        use db browser to view data but running again creates duplicates in db
-//        databaseHelper.insertExercise("running", 67);
-        databaseHelper.insertFood("Hardboiled Egg","Protein", 70, 50);
-
-        result = databaseHelper.selectFoods();
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        Log.d("RESULT WAS: ", result);
     }
 
     public void createUser(){
@@ -172,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void initializeLogin(){
         //Gets username and password views
+        setContentView(R.layout.login_page);
         usernameLoginInput = (EditText) findViewById(R.id.usernameInput2);
         passwordLoginInput = (EditText) findViewById(R.id.passwordInput2);
         loginButton = (Button) findViewById(R.id.loginButton2);
