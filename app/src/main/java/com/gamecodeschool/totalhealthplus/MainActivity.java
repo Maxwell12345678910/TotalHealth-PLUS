@@ -55,32 +55,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Log.d("RESULT WAS: ", result);
     }
 
-    public void calGoal(View v){
-        setContentView(R.layout.fragment_add_to_food);
-    }
-    public void BFood(View v){
-        setContentView(R.layout.fragment_browse_food);
-    }
-    public void PreGoals(View v){
-        setContentView(R.layout.fragment_past_goals);
-    }
 
-    public void backToMain(View v){
-
-        setContentView(R.layout.activity_main);
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
-
-        // Initialize fragments
-        fragmentMap.put(R.id.person, new FirstFragment());
-        fragmentMap.put(R.id.home, new SecondFragment());
-        fragmentMap.put(R.id.settings, new ThirdFragment());
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, fragmentMap.get(R.id.home))
-                .commit();
-    }
+//    public void backToMain(View v){
+//
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.flFragment, new SecondFragment);
+//                .commit();
+//    }
 
     public void createUser(){
         setContentView(R.layout.create_user_page1);
@@ -225,9 +206,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    public void seeAddGoal(View view) {
+
+    //this is the code needed to switch between views after the navbar is loaded (which should happen after the user logs in)
+
+
+//    public void seeAddGoal(View v){
+//        setContentView(R.layout.joe);
+//    }
+
+    public void seeAddFood(View v){
+        setContentView(R.layout.food_add_food);
+    }
+
+    public void seeMainDash(View v){
+        setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new AddToFood())
+                .replace(R.id.flFragment, new SecondFragment())
                 .commit();
     }
+
+
 }
+

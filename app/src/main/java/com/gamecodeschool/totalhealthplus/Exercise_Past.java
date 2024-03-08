@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddToFood#newInstance} factory method to
+ * Use the {@link Exercise_Past#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddToFood extends Fragment {
+public class Exercise_Past extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +24,7 @@ public class AddToFood extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public AddToFood() {
+    public Exercise_Past() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class AddToFood extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AddToFood.
+     * @return A new instance of fragment Exercise_Past.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddToFood newInstance(String param1, String param2) {
-        AddToFood fragment = new AddToFood();
+    public static Exercise_Past newInstance(String param1, String param2) {
+        Exercise_Past fragment = new Exercise_Past();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,6 +59,6 @@ public class AddToFood extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_to_food, container, false);
+        return inflater.inflate(R.layout.fragment_exercise__past, container, false);
     }
 }

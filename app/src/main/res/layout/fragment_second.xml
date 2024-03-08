@@ -12,7 +12,7 @@
         android:layout_width="256dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:onClick="seeAddGoal"
+        android:onClick="seeAddFood"
         android:text="Add To Today's Goal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -32,11 +32,12 @@
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
+        android:onClick="seeAddGoal"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
