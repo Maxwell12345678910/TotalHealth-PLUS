@@ -5,16 +5,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,8 +30,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
-    private DatabaseHelper databaseHelper;
+    public static DatabaseHelper databaseHelper;
     private boolean loginSuccess;
+
+    private TableLayout browseFoodsTable;
 
 
     String result = "";
@@ -45,21 +53,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         databaseHelper = new DatabaseHelper(this);
 
         initializeLogin();
-
-//        use db browser to view data but running again creates duplicates in db
-//        databaseHelper.insertExercise("running", 67);
-        databaseHelper.insertFood("Hardboiled Egg","Protein", 70, 50);
-
-        result = databaseHelper.selectFoods();
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        Log.d("RESULT WAS: ", result);
     }
 
     public void calGoal(View v){
         setContentView(R.layout.fragment_add_to_food);
     }
     public void BFood(View v){
+
         setContentView(R.layout.fragment_browse_food);
+        showFoods();
     }
     public void PreGoals(View v){
         setContentView(R.layout.fragment_past_goals);
@@ -229,5 +231,52 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new AddToFood())
                 .commit();
+    }
+
+    public void showFoods(){
+        browseFoodsTable = findViewById(R.id.browseFoodsTable);
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+
+            TableRow newRow = new TableRow(this);
+            newRow.setWeightSum(1);
+
+            LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,  // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT,   // Height
+                    0.25f
+            );
+
+            TextView descView = new TextView(this);
+            descView.setText(foodDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView catView = new TextView(this);
+            catView.setText(foodCategory);
+            catView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this);
+            calsView.setText("" + calsPerServing);
+            calsView.setLayoutParams(textViewParams);
+
+            TextView weightView = new TextView(this);
+            weightView.setText("" + weightPerServ);
+            weightView.setLayoutParams(textViewParams);
+
+            newRow.addView(descView);
+            newRow.addView(catView);
+            newRow.addView(calsView);
+            newRow.addView(weightView);
+
+            browseFoodsTable.addView(newRow);
+        }
     }
 }
