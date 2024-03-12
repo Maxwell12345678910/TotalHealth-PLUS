@@ -11,11 +11,11 @@
         android:id="@+id/button"
         android:layout_width="256dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:onClick="seeAddGoal"
+        android:layout_marginTop="108dp"
+        android:onClick="seeFoodAdd"
         android:text="Add To Today's Goal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -25,23 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
-        android:text="Browse Exercises"
+        android:onClick="seeFoodBrowse"
+        android:text="Browse Foods"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <Button
-        android:id="@+id/bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:width="256dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <Button
         android:id="@+id/button3"
@@ -49,7 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
-        android:text="Previous Goals"
+        android:onClick="seeFoodPrev"
+        android:text="Previous Records"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"

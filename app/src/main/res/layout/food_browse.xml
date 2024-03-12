@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddToFood">
+    tools:context=".FoodBrowse">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -16,7 +16,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginBottom="650dp"
         android:background="#000000"
-        android:onClick="seeMainDash"
+        android:onClick="seeFoodDash"
         android:text="Back to Dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

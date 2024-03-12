@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -207,23 +206,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-    //this is the code needed to switch between views after the navbar is loaded (which should happen after the user logs in)
-
-
-//    public void seeAddGoal(View v){
-//        setContentView(R.layout.joe);
-//    }
-
-    public void seeAddFood(View v){
-        setContentView(R.layout.food_add_food);
+    public void seeFoodPrev(View v){
+        setContentView(R.layout.food_previous);
     }
 
+    public void seeFoodAdd(View v){setContentView(R.layout.food_add);}
+
+    public void seeFoodBrowse(View view) {
+        setContentView(R.layout.food_browse);
+    }
     public void seeMainDash(View v){
         setContentView(R.layout.activity_main);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new SecondFragment())
                 .commit();
     }
+    public void seeFoodDash(View v){
+        setContentView(R.layout.activity_main);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flFragment, new FirstFragment())
+                .commit();
+    }
+    public void seeFitnessDash(View v){
+        setContentView(R.layout.activity_main);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flFragment, new ThirdFragment())
+                .commit();
+    }
+
 
 
 }
