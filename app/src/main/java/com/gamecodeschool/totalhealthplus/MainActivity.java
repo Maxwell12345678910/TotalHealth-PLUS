@@ -263,15 +263,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         showFoods();
 
     }
+
+    public void seeFitnessPrev(View v){
+        setContentView(R.layout.fitness_previous);
+    }
+    public void seeFitnessAdd(View v){
+        setContentView(R.layout.fitness_add);
+    }
+    public void seeFitnessBrowse(View v){
+        setContentView(R.layout.fitness_browse);
+    }
     public void seeMainDash(View v){
         setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new SecondFragment())
                 .commit();
     }
     public void seeFoodDash(View v){
         setContentView(R.layout.activity_main);
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
@@ -283,6 +295,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void seeFitnessDash(View v){
         setContentView(R.layout.activity_main);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new ThirdFragment())
                 .commit();

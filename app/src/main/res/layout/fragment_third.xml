@@ -11,10 +11,10 @@
         android:layout_width="256dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:onClick="seeAddGoal"
+        android:onClick="seeFitnessAdd"
         android:text="Add Today's Fitness Goal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
+        android:onClick="seeFitnessBrowse"
         android:text="Browse Exercises"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
+        android:onClick="seeFitnessPrev"
         android:text="Previous Fitness Record"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
