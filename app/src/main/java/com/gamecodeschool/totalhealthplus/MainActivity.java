@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.fragment_browse_food);
         showFoods();
+
     }
     public void PreGoals(View v){
         setContentView(R.layout.fragment_past_goals);
@@ -234,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void showFoods(){
+
         browseFoodsTable = findViewById(R.id.browseFoodsTable);
         Cursor cursor = databaseHelper.selectFoods();
 
@@ -249,10 +252,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             TableRow newRow = new TableRow(this);
             newRow.setWeightSum(1);
 
-            LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,  // Width
-                    ViewGroup.LayoutParams.WRAP_CONTENT,   // Height
-                    0.25f
+            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                    0, // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                    0.25f // Weight
             );
 
             TextView descView = new TextView(this);
