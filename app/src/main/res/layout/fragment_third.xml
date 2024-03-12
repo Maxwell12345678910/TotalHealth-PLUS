@@ -12,7 +12,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
         android:onClick="seeAddGoal"
-        android:text="Add To Today's Goal"
+        android:text="Add Today's Fitness Goal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,24 +31,12 @@
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <Button
-        android:id="@+id/bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:width="256dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
-        android:text="Previous Goals"
+        android:text="Previous Fitness Record"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +47,7 @@
         android:layout_width="235dp"
         android:layout_height="34dp"
         android:layout_marginTop="28dp"
-        android:text="3rd"
+        android:text="Fitness Dashboard"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.562"

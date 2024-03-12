@@ -142,24 +142,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //
-    public String selectFoods(){
+    public Cursor selectFoods(){
 
         SQLiteDatabase testDb = getReadableDatabase();
         String select = "SELECT foods.* FROM foods";
         String result = "";
         Cursor cursor = testDb.rawQuery(select, null);
 
-        if(cursor.moveToNext()){
-
-            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
-            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
-            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
-            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
-            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
-            result = foodID + " " + foodDescription + " " + foodCategory + " " + calsPerServing + " " + weightPerServ;
-        }
-
-        return result;
+        return cursor;
     }
 
     public long insertUser(String un, String pw, String firstName, String lastName, int age, int height, int weight){
@@ -207,7 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             @SuppressLint("Range") int height = cursor.getInt(cursor.getColumnIndex("HeightInInches"));
             @SuppressLint("Range") int weight = cursor.getInt(cursor.getColumnIndex("WeightInLbs"));
             result = username + " " + password + " " + firstName + " " + lastName + " " + age +
-            " " + height + " " + weight;
+                    " " + height + " " + weight;
         }
 
         return result;

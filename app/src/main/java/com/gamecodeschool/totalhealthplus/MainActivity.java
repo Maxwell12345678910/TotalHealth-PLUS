@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.SparseArray;
 import android.view.MenuItem;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,7 +28,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
-    private DatabaseHelper databaseHelper;
+
+
+    public static DatabaseHelper databaseHelper;
+
+    private TableLayout browseFoodsTable;
+
     private boolean loginSuccess;
 
 
@@ -45,22 +55,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         initializeLogin();
 
-//        use db browser to view data but running again creates duplicates in db
-//        databaseHelper.insertExercise("running", 67);
-        databaseHelper.insertFood("Hardboiled Egg","Protein", 70, 50);
-
-        result = databaseHelper.selectFoods();
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-        Log.d("RESULT WAS: ", result);
     }
 
 
-//    public void backToMain(View v){
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.flFragment, new SecondFragment);
-//                .commit();
-//    }
 
     public void createUser(){
         setContentView(R.layout.create_user_page1);
@@ -205,6 +202,55 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
+    public void showFoods(){
+
+        browseFoodsTable = findViewById(R.id.browseFoodsTable);
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+
+            TableRow newRow = new TableRow(this);
+            newRow.setWeightSum(1);
+
+            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                    0, // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                    0.25f // Weight
+            );
+
+            TextView descView = new TextView(this);
+            descView.setText(foodDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView catView = new TextView(this);
+            catView.setText(foodCategory);
+            catView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this);
+            calsView.setText("" + calsPerServing);
+            calsView.setLayoutParams(textViewParams);
+
+            TextView weightView = new TextView(this);
+            weightView.setText("" + weightPerServ);
+            weightView.setLayoutParams(textViewParams);
+
+            newRow.addView(descView);
+            newRow.addView(catView);
+            newRow.addView(calsView);
+            newRow.addView(weightView);
+
+            browseFoodsTable.addView(newRow);
+        }
+    }
+
+
 
     public void seeFoodPrev(View v){
         setContentView(R.layout.food_previous);
@@ -214,6 +260,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void seeFoodBrowse(View view) {
         setContentView(R.layout.food_browse);
+        showFoods();
+
     }
     public void seeMainDash(View v){
         setContentView(R.layout.activity_main);
@@ -223,9 +271,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void seeFoodDash(View v){
         setContentView(R.layout.activity_main);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new FirstFragment())
                 .commit();
+
     }
     public void seeFitnessDash(View v){
         setContentView(R.layout.activity_main);

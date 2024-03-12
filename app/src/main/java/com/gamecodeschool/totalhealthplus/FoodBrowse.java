@@ -1,5 +1,9 @@
 package com.gamecodeschool.totalhealthplus;
 
+import static com.gamecodeschool.totalhealthplus.MainActivity.databaseHelper;
+
+import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +22,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FoodBrowse extends Fragment {
+
+    private TableLayout browseFoodsTable;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +56,52 @@ public class FoodBrowse extends Fragment {
         return fragment;
     }
 
+    public void showFoods(){
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+
+            TableRow newRow = new TableRow(requireContext());
+            newRow.setWeightSum(1);
+
+            LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,  // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT,   // Height
+                    0.25f
+            );
+
+            TextView descView = new TextView(this.requireContext());
+            descView.setText(foodDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView catView = new TextView(this.requireContext());
+            catView.setText(foodCategory);
+            catView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this.requireContext());
+            calsView.setText("" + calsPerServing);
+            calsView.setLayoutParams(textViewParams);
+
+            TextView weightView = new TextView(this.requireContext());
+            weightView.setText("" + weightPerServ);
+            weightView.setLayoutParams(textViewParams);
+
+            newRow.addView(descView);
+            newRow.addView(catView);
+            newRow.addView(calsView);
+            newRow.addView(weightView);
+
+            browseFoodsTable.addView(newRow);
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +115,11 @@ public class FoodBrowse extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.food_browse, container, false);
+        View rootView = inflater.inflate(R.layout.food_browse, container, false);
+
+        browseFoodsTable = (TableLayout) rootView.findViewById(R.id.browseFoodsTable);
+        showFoods();
+
+        return rootView;
     }
 }
