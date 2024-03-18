@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.login_page);
 
-
         databaseHelper = new DatabaseHelper(this);
 
         initializeLogin();

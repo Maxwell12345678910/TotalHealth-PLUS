@@ -36,6 +36,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String createIntakeTableQuery;
     public String intakeTableName;
 
+    //Previous goals table
+    public String prevGoalsMetTableQuery;
+    public String prevGoalsMetTableName;
+
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
@@ -90,6 +94,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "Servings INT, " +
                         "TotalCalsIn INT, " +
                         "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
+
+        prevGoalsMetTableName = "prev_goals_met";
+
 
     }
 
