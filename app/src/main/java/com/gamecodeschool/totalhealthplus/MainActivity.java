@@ -19,6 +19,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.login_page);
+        setContentView(R.layout.prev_goal_details);
 
         databaseHelper = new DatabaseHelper(this);
 

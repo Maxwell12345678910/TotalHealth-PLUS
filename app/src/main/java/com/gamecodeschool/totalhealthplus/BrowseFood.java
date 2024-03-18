@@ -99,6 +99,7 @@ public class BrowseFood extends Fragment {
             newRow.addView(weightView);
 
             browseFoodsTable.addView(newRow);
+
         }
     }
 
