@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 int heightInput = Integer.parseInt(heightInputString);
 
                                 databaseHelper.insertUser(usernameInput, passwordInput, firstNameInput, lastNameInput, ageInput, weightInput, heightInput);
-                                databaseHelper.insertExercise("Suicides", 50);
 
                                 setContentView(R.layout.login_page);
                                 initializeLogin();
