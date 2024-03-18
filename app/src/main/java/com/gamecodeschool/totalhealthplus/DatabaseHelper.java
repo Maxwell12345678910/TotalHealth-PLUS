@@ -37,8 +37,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String intakeTableName;
 
     //Previous goals table
-    public String prevGoalsMetTableQuery;
+    public String createPrevGoalsMetTableQuery;
     public String prevGoalsMetTableName;
+
 
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
@@ -96,7 +97,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
 
         prevGoalsMetTableName = "prev_goals_met";
-
+        createPrevGoalsMetTableQuery =
+                "CREATE TABLE " + prevGoalsMetTableName + "(Username VARCHAR(50) PRIMARY KEY, " +
+                        "Date date, " +
+                        "Goal TEXT, " +
+                        "GoalMet INT, " +
+                        "GoalCategory VARCHAR(50), " +
+                        "FOREIGN KEY (Username) REFERENCES users(Username));";
 
     }
 
@@ -108,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createExSelectTableQuery);
         db.execSQL(createActivityTableQuery);
         db.execSQL(createIntakeTableQuery);
+        //db.execSQL(createPrevGoalsMetTableQuery);
 
     }
 
@@ -119,6 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + exSelectTableName);
         db.execSQL("DROP TABLE IF EXISTS " + activityTableName);
         db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
+        //db.execSQL("DROP TABLE IF EXISTS " + prevGoalsMetTableName);
         onCreate(db);
 
     }
