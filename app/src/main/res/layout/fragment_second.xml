@@ -26,6 +26,7 @@
         android:layout_marginTop="80dp"
         android:width="256dp"
         android:text="Browse Exercises"
+        android:onClick="BExercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"

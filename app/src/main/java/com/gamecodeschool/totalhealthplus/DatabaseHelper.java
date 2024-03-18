@@ -241,6 +241,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insertingResult;
     }
 
+    public Cursor selectExercise() {
+
+        SQLiteDatabase testDb = getReadableDatabase();
+        String select = "SELECT exercise_selections.* FROM exercise_selections";
+        String result = "";
+
+        return testDb.rawQuery(select, null);
+    }
+
     public int deleteExercise(String exerciseDescription){
 
         SQLiteDatabase database = this.getWritableDatabase();

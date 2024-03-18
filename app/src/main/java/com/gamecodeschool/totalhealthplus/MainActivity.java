@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static DatabaseHelper databaseHelper;
     private boolean loginSuccess;
 
-    private TableLayout browseFoodsTable;
+    private TableLayout browseFoodsTable, browseExerciseTable;
 
 
     String result = "";
@@ -65,10 +65,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         showFoods();
 
     }
+    public void BExercise(View v) {
+        setContentView(R.layout.fragment_browse_exercise);
+        showExercise();
+    }
     public void PreGoals(View v){
         setContentView(R.layout.fragment_past_goals);
     }
-
     public void backToMain(View v){
 
         setContentView(R.layout.activity_main);
@@ -140,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 int heightInput = Integer.parseInt(heightInputString);
 
                                 databaseHelper.insertUser(usernameInput, passwordInput, firstNameInput, lastNameInput, ageInput, weightInput, heightInput);
+                                databaseHelper.insertExercise("Suicides", 50);
 
                                 setContentView(R.layout.login_page);
                                 initializeLogin();
@@ -228,7 +232,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
     public void seeAddGoal(View view) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new AddToFood())
@@ -280,6 +283,42 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             newRow.addView(weightView);
 
             browseFoodsTable.addView(newRow);
+        }
+    }
+
+    public void showExercise(){
+
+        browseExerciseTable = findViewById(R.id.browseExerciseTable);
+        Cursor cursor = databaseHelper.selectExercise();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsPerMinute = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
+
+
+            TableRow newRow = new TableRow(this);
+            newRow.setWeightSum(1);
+
+            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                    0, // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                    0.5f // Weight
+            );
+
+            TextView descView = new TextView(this);
+            descView.setText(exerciseDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this);
+            calsView.setText("" + calsPerMinute);
+            calsView.setLayoutParams(textViewParams);
+
+            newRow.addView(descView);
+            newRow.addView(calsView);
+
+            browseExerciseTable.addView(newRow);
         }
     }
 }
