@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public static GoalAdapter goalAdapter;
     private RecyclerView goalRecyclerView;
+    String dateString;
 
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
@@ -72,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
 
         // Format the current date as a string
-        String dateString = formatter.format(currentDate);
+        dateString = formatter.format(currentDate);
+
 
         initializeLogin();
     }

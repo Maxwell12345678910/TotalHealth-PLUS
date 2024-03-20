@@ -98,7 +98,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         prevGoalsMetTableName = "prev_goals_met";
         createPrevGoalsMetTableQuery =
-                "CREATE TABLE " + prevGoalsMetTableName + "(Username VARCHAR(50) PRIMARY KEY, " +
+                "CREATE TABLE " + prevGoalsMetTableName + "(GoalID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Username VARCHAR(50), " +
                         "Date date, " +
                         "Goal TEXT, " +
                         "GoalMet INT, " +
