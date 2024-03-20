@@ -36,6 +36,8 @@ public class FindFood extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private String newKeyword = MainActivity.Keyword;
+
     public FindFood() {
         // Required empty public constructor
     }
@@ -83,7 +85,6 @@ public class FindFood extends Fragment {
 
     public void FindFoods() {
         Cursor cursor = databaseHelper.selectFoods();
-        String keyword = null;
 
         while (cursor.moveToNext()) {
 
@@ -93,7 +94,7 @@ public class FindFood extends Fragment {
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            if (containsCharacters(foodDescription.toString(), keyword)) {
+            if (containsCharacters(foodDescription.toString(), newKeyword)) {
                 TableRow newRow = new TableRow(requireContext());
                 newRow.setWeightSum(1);
 
@@ -147,7 +148,7 @@ public class FindFood extends Fragment {
         View rootView = inflater.inflate(R.layout.food_add, container, false);
 
         FindMyFoods = (TableLayout) rootView.findViewById(R.id.FindFoods2);
-        FindFoods();
+        //FindFoods();
 
         return rootView;
     }

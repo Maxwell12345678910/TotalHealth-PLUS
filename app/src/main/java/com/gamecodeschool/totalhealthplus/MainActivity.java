@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private TableLayout browseFoodsTable;
     private boolean loginSuccess;
-    private String Keyword; // this is the keyword they type in for search
+    public static String Keyword; // this is the keyword they type in for search
     private EditText SearchKeyword;
     private TableLayout FindMyFood;
     private BottomNavigationView bottomNavigationView;
@@ -260,12 +260,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
         Keyword = SearchKeyword.getText().toString();
 
+        FindFoods();
         Log.d(TAG, "Text sent: " + Keyword);
     }
 
     public void FindFoods(){
 
-         FindMyFood = findViewById(R.id.FindFoods2);
+        FindMyFood = findViewById(R.id.FindFoods2);
         Cursor cursor = databaseHelper.selectFoods();
 
         while (cursor.moveToNext()){
@@ -307,7 +308,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(calsView);
                 newRow.addView(weightView);
 
-                browseFoodsTable.addView(newRow);
+                FindMyFood.addView(newRow);
+
             } else {
                 //do nothing
             }
