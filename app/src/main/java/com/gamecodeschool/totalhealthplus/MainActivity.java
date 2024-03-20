@@ -3,9 +3,13 @@ package com.gamecodeschool.totalhealthplus;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
@@ -27,7 +31,13 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,
+        GoalAdapter.OnItemClickListener {
 
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
@@ -37,8 +47,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private TableLayout browseFoodsTable, browseExerciseTable;
 
+    public static List<Goal> currentUserGoalList = new ArrayList<>();
 
-    String result = "";
+    public static GoalAdapter goalAdapter;
+    private RecyclerView goalRecyclerView;
 
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
@@ -49,9 +61,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.prev_goal_details);
+        setContentView(R.layout.login_page);
 
         databaseHelper = new DatabaseHelper(this);
+
+        // Get the current date
+        Date currentDate = new Date();
+
+        // Define a date format
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+
+        // Format the current date as a string
+        String dateString = formatter.format(currentDate);
 
         initializeLogin();
     }
@@ -69,8 +90,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.fragment_browse_exercise);
         showExercise();
     }
+    @SuppressLint("MissingInflatedId")
     public void PreGoals(View v){
         setContentView(R.layout.fragment_past_goals);
+
+        goalRecyclerView = findViewById(R.id.goalRecyclerView);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        goalRecyclerView.setLayoutManager(mLayoutManager);
+
+        goalRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        goalRecyclerView.setAdapter(goalAdapter);
     }
     public void backToMain(View v){
 
@@ -167,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
+    @SuppressLint("MissingInflatedId")
     public void checkLogin(){
 
         String usernameCheck = usernameLoginInput.getText().toString();
@@ -179,8 +210,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
 
-        if (loginSuccess){
+        if (loginSuccess) {
+
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+
+            currentUserGoalList = getGoalsForUser(usernameCheck);
+            goalAdapter = new GoalAdapter(currentUserGoalList, this);
+
             //Go to home page
             setContentView(R.layout.activity_main);
 
@@ -320,4 +356,51 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             browseExerciseTable.addView(newRow);
         }
     }
+
+    @Override
+    public void onItemClick(Goal goal) {
+        GoalDetailsDialog goalDetailsDialog = new GoalDetailsDialog();
+
+        goalDetailsDialog.setGoalEntry(goal);
+
+        goalDetailsDialog.show(getSupportFragmentManager(), "123");
+    }
+
+    public List<Goal> getGoalsForUser(String username){
+
+        List<Goal> resultList = new ArrayList<>();
+        String getGoalsQuery = "SELECT Date, Goal, GoalMet, GoalCategory FROM prev_goals_met WHERE Username = " + username;
+
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        try (Cursor cursor = db.rawQuery(getGoalsQuery, null)) {
+            if (cursor != null && cursor.moveToFirst())
+            {
+                do
+                {
+
+                    String dateStr = cursor.getString(cursor.getColumnIndexOrThrow("Date"));
+                    @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex("Goal"));
+                    @SuppressLint("Range") int goalMet = cursor.getInt(cursor.getColumnIndex("GoalMet"));
+                    @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex("GoalCategory"));
+
+                    resultList.add(new Goal(dateStr, description, category, goalMet == 1)); // Assuming 1 represents true for goal met
+                } while (cursor.moveToNext());
+            }
+        }
+        catch (SQLiteException e)
+        {
+            e.printStackTrace(); // Handle or log the exception as needed
+        }
+        finally
+        {
+            if (db != null)
+            {
+                db.close(); // Close the database connection
+            }
+        }
+
+        return resultList;
+    }
+
 }

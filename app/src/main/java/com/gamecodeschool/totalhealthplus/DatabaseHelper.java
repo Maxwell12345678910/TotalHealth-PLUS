@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createExSelectTableQuery);
         db.execSQL(createActivityTableQuery);
         db.execSQL(createIntakeTableQuery);
-        //db.execSQL(createPrevGoalsMetTableQuery);
+        db.execSQL(createPrevGoalsMetTableQuery);
 
     }
 
@@ -127,7 +127,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + exSelectTableName);
         db.execSQL("DROP TABLE IF EXISTS " + activityTableName);
         db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
-        //db.execSQL("DROP TABLE IF EXISTS " + prevGoalsMetTableName);
+        db.execSQL("DROP TABLE IF EXISTS " + prevGoalsMetTableName);
         onCreate(db);
 
     }
@@ -325,5 +325,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.delete("daily_intake", "Date=? AND FoodDescription=? AND " +
                         "Servings=?",
                 new String[]{date, foodDescription, Integer.toString(servings)});
+    }
+
+    public long insertGoal(String username, String date, String description, String category){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("Username", username);
+        values.put("Date", date);
+        values.put("Goal", description);
+        values.put("GoalMet",0);
+        values.put("GoalCategory", category);
+
+        long insertingResult = database.insert("prev_goals_met", null, values);
+
+        database.close();
+
+        //Will return number of row if successful, -1 otherwise
+        return insertingResult;
+
     }
 }
