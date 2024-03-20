@@ -1,5 +1,8 @@
 package com.gamecodeschool.totalhealthplus;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static com.gamecodeschool.totalhealthplus.FindFood.containsCharacters;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -33,12 +36,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static DatabaseHelper databaseHelper;
 
     private TableLayout browseFoodsTable;
-
     private boolean loginSuccess;
-
-
-    String result = "";
-
+    private String Keyword; // this is the keyword they type in for search
+    private EditText SearchKeyword;
+    private TableLayout FindMyFood;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
 
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void initializeLogin(){
         //Gets username and password views
         usernameLoginInput = (EditText) findViewById(R.id.usernameInput2);
+        Log.d(TAG, "Text sent: " + usernameLoginInput);
         passwordLoginInput = (EditText) findViewById(R.id.passwordInput2);
         loginButton = (Button) findViewById(R.id.loginButton2);
         signUpButton = (Button) findViewById(R.id.signUpButton);
@@ -251,12 +253,78 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
+    //search foods methods
+
+    public void StartSearch(View v) {
+
+        SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
+        Keyword = SearchKeyword.getText().toString();
+
+        Log.d(TAG, "Text sent: " + Keyword);
+    }
+
+    public void FindFoods(){
+
+         FindMyFood = findViewById(R.id.FindFoods2);
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+            if (containsCharacters(foodDescription, Keyword)) {
+                TableRow newRow = new TableRow(this);
+                newRow.setWeightSum(1);
+
+                TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                        0, // Width
+                        ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                        0.25f // Weight
+                );
+
+                TextView descView = new TextView(this);
+                descView.setText(foodDescription);
+                descView.setLayoutParams(textViewParams);
+
+                TextView catView = new TextView(this);
+                catView.setText(foodCategory);
+                catView.setLayoutParams(textViewParams);
+
+                TextView calsView = new TextView(this);
+                calsView.setText("" + calsPerServing);
+                calsView.setLayoutParams(textViewParams);
+
+                TextView weightView = new TextView(this);
+                weightView.setText("" + weightPerServ);
+                weightView.setLayoutParams(textViewParams);
+
+                newRow.addView(descView);
+                newRow.addView(catView);
+                newRow.addView(calsView);
+                newRow.addView(weightView);
+
+                browseFoodsTable.addView(newRow);
+            } else {
+                //do nothing
+            }
+        }
+    }
+
+    //end of search Food methods
+
 
     public void seeFoodPrev(View v){
         setContentView(R.layout.food_previous);
     }
 
-    public void seeFoodAdd(View v){setContentView(R.layout.food_add);}
+    public void seeFoodAdd(View v){
+        setContentView(R.layout.food_add);
+        FindFoods();
+    }
 
     public void seeFoodBrowse(View view) {
         setContentView(R.layout.food_browse);

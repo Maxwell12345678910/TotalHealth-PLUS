@@ -116,6 +116,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+//    public List<String> searchSimilarWords(String keyword){
+//        List<String> similarWords = new ArrayList<>();
+//        try{
+//            String checkUserQuery = "SELECT FoodDescription FROM foods WHERE levenshtein_ratio(FoodDescription, ?) >= 0.5";
+//
+//            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+//            Cursor cursor = sqLiteDatabase.rawQuery(checkUserQuery, null);
+//
+//        }
+//    }
+
     public long insertFood(String description, String category, int calPerServ, float weightPerServing){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
