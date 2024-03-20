@@ -308,6 +308,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(calsView);
                 newRow.addView(weightView);
 
+                FindMyFood.removeAllViews();
                 FindMyFood.addView(newRow);
 
             } else {
