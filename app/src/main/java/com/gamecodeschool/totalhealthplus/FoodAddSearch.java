@@ -23,7 +23,7 @@ import android.widget.TextView;
  * Use the {@link FoodBrowse#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FindFood extends Fragment {
+public class FoodAddSearch extends Fragment {
 
     private TableLayout FindMyFoods;
 
@@ -38,7 +38,7 @@ public class FindFood extends Fragment {
 
     private String newKeyword = MainActivity.Keyword;
 
-    public FindFood() {
+    public FoodAddSearch() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class FindFood extends Fragment {
      * @return A new instance of fragment BrowseFood.
      */
     // TODO: Rename and change types and number of parameters
-    public static FindFood newInstance(String param1, String param2) {
-        FindFood fragment = new FindFood();
+    public static FoodAddSearch newInstance(String param1, String param2) {
+        FoodAddSearch fragment = new FoodAddSearch();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

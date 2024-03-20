@@ -1,7 +1,7 @@
 package com.gamecodeschool.totalhealthplus;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-import static com.gamecodeschool.totalhealthplus.FindFood.containsCharacters;
+import static com.gamecodeschool.totalhealthplus.FoodAddSearch.containsCharacters;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
