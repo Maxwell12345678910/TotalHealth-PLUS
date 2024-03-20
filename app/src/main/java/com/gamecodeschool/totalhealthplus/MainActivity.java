@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 FindMyFood.addView(newRow);
 
             } else {
-                //do nothing
+                FindMyFood.removeAllViews();
             }
         }
     }
