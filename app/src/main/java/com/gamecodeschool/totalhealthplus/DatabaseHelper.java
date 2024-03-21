@@ -36,6 +36,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String createIntakeTableQuery;
     public String intakeTableName;
 
+    //Previous goals table
+    public String createPrevGoalsMetTableQuery;
+    public String prevGoalsMetTableName;
+
+
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
@@ -91,6 +96,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "TotalCalsIn INT, " +
                         "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
 
+        prevGoalsMetTableName = "prev_goals_met";
+        createPrevGoalsMetTableQuery =
+                "CREATE TABLE " + prevGoalsMetTableName + "(GoalID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Username VARCHAR(50), " +
+                        "Date date, " +
+                        "Goal TEXT, " +
+                        "GoalMet INT, " +
+                        "GoalCategory VARCHAR(50), " +
+                        "FOREIGN KEY (Username) REFERENCES users(Username));";
+
     }
 
     @Override
@@ -101,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createExSelectTableQuery);
         db.execSQL(createActivityTableQuery);
         db.execSQL(createIntakeTableQuery);
+        db.execSQL(createPrevGoalsMetTableQuery);
 
     }
 
@@ -112,20 +128,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + exSelectTableName);
         db.execSQL("DROP TABLE IF EXISTS " + activityTableName);
         db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
+        db.execSQL("DROP TABLE IF EXISTS " + prevGoalsMetTableName);
         onCreate(db);
 
     }
-
-//    public List<String> searchSimilarWords(String keyword){
-//        List<String> similarWords = new ArrayList<>();
-//        try{
-//            String checkUserQuery = "SELECT FoodDescription FROM foods WHERE levenshtein_ratio(FoodDescription, ?) >= 0.5";
-//
-//            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-//            Cursor cursor = sqLiteDatabase.rawQuery(checkUserQuery, null);
-//
-//        }
-//    }
 
     public long insertFood(String description, String category, int calPerServ, float weightPerServing){
         SQLiteDatabase database = this.getWritableDatabase();
@@ -252,6 +258,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insertingResult;
     }
 
+    public Cursor selectExercise() {
+
+        SQLiteDatabase testDb = getReadableDatabase();
+        String select = "SELECT exercise_selections.* FROM exercise_selections";
+        String result = "";
+
+        return testDb.rawQuery(select, null);
+    }
+
     public int deleteExercise(String exerciseDescription){
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -311,5 +326,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.delete("daily_intake", "Date=? AND FoodDescription=? AND " +
                         "Servings=?",
                 new String[]{date, foodDescription, Integer.toString(servings)});
+    }
+
+    public long insertGoal(String username, String date, String description, String category){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("Username", username);
+        values.put("Date", date);
+        values.put("Goal", description);
+        values.put("GoalMet",0);
+        values.put("GoalCategory", category);
+
+        long insertingResult = database.insert("prev_goals_met", null, values);
+
+        database.close();
+
+        //Will return number of row if successful, -1 otherwise
+        return insertingResult;
+
     }
 }

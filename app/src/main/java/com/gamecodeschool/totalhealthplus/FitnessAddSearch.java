@@ -23,9 +23,9 @@ import android.widget.TextView;
  * Use the {@link FoodBrowse#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FoodAddSearch extends Fragment {
+public class FitnessAddSearch extends Fragment {
 
-    private TableLayout FindMyFoods;
+    private TableLayout FindMyFitness;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,9 +36,9 @@ public class FoodAddSearch extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private String newKeyword = MainActivity.FoodKeyword;
+    private String newKeyword = MainActivity.FitnessKeyword;
 
-    public FoodAddSearch() {
+    public FitnessAddSearch() {
         // Required empty public constructor
     }
 
@@ -50,9 +50,10 @@ public class FoodAddSearch extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment BrowseFood.
      */
-    // TODO: Rename and change types and number of parameters
-    public static FoodAddSearch newInstance(String param1, String param2) {
-        FoodAddSearch fragment = new FoodAddSearch();
+    // TODO: Rename and change types and number
+    //  of parameters
+    public static FitnessAddSearch newInstance(String param1, String param2) {
+        FitnessAddSearch fragment = new FitnessAddSearch();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,50 +84,39 @@ public class FoodAddSearch extends Fragment {
         return true; // Return true if all characters are found
     }
 
-    public void FindFoods() {
-        Cursor cursor = databaseHelper.selectFoods();
+    public void FindFitness() {
+        Cursor cursor = databaseHelper.selectExercise();
 
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()){
 
-            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
-            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
-            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
-            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
-            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsPerMinute = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
 
-            if (containsCharacters(foodDescription.toString(), newKeyword)) {
+
+            if (containsCharacters(exerciseDescription.toString(), newKeyword)) {
                 TableRow newRow = new TableRow(requireContext());
                 newRow.setWeightSum(1);
 
                 LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,  // Width
                         ViewGroup.LayoutParams.WRAP_CONTENT,   // Height
-                        0.25f
+                        0.5f
                 );
 
+                TextView descView = new TextView(this.requireContext());
+                descView.setText(exerciseDescription);
+                descView.setLayoutParams(textViewParams);
 
-            TextView descView = new TextView(this.requireContext());
-            descView.setText(foodDescription);
-            descView.setLayoutParams(textViewParams);
+                TextView calsView = new TextView(this.requireContext());
+                calsView.setText("" + calsPerMinute);
+                calsView.setLayoutParams(textViewParams);
 
-            TextView catView = new TextView(this.requireContext());
-            catView.setText(foodCategory);
-            catView.setLayoutParams(textViewParams);
+                newRow.addView(descView);
+                newRow.addView(calsView);
 
-            TextView calsView = new TextView(this.requireContext());
-            calsView.setText("" + calsPerServing);
-            calsView.setLayoutParams(textViewParams);
 
-            TextView weightView = new TextView(this.requireContext());
-            weightView.setText("" + weightPerServ);
-            weightView.setLayoutParams(textViewParams);
-
-            newRow.addView(descView);
-            newRow.addView(catView);
-            newRow.addView(calsView);
-            newRow.addView(weightView);
-
-            FindMyFoods.addView(newRow);
+                FindMyFitness.addView(newRow);
 
             }
         }
@@ -145,9 +135,9 @@ public class FoodAddSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.food_add, container, false);
+        View rootView = inflater.inflate(R.layout.fitness_add, container, false);
 
-        FindMyFoods = (TableLayout) rootView.findViewById(R.id.FindFoods2);
+        FindMyFitness = (TableLayout) rootView.findViewById(R.id.FindFitness2);
         //FindFoods();
 
         return rootView;

@@ -31,15 +31,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
-
-
     public static DatabaseHelper databaseHelper;
-
     private TableLayout browseFoodsTable;
     private boolean loginSuccess;
-    public static String Keyword; // this is the keyword they type in for search
+    public static String FoodKeyword; // this is the keyword they type in for search
+    public static String FitnessKeyword;
     private EditText SearchKeyword;
     private TableLayout FindMyFood;
+    private TableLayout FindFitness;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
 
@@ -203,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
+// show foods method
     public void showFoods(){
 
         browseFoodsTable = findViewById(R.id.browseFoodsTable);
@@ -258,10 +257,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void StartSearch(View v) {
 
         SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
-        Keyword = SearchKeyword.getText().toString();
+        FoodKeyword = SearchKeyword.getText().toString();
 
         FindFoods();
-        Log.d(TAG, "Text sent: " + Keyword);
+        Log.d(TAG, "Text sent: " + FoodKeyword);
     }
 
     public void FindFoods(){
@@ -277,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            if (containsCharacters(foodDescription, Keyword)) {
+            if (containsCharacters(foodDescription, FoodKeyword)) {
                 TableRow newRow = new TableRow(this);
                 newRow.setWeightSum(1);
 
@@ -318,6 +317,60 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     //end of search Food methods
+
+    // start of find fitness
+
+    public void StartSearchFit(View v) {
+
+        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
+        FitnessKeyword = SearchKeyword.getText().toString();
+
+        FindFoods();
+        Log.d(TAG, "Text sent: " + FitnessKeyword);
+    }
+
+    public void showExercise(){
+
+        FindFitness = findViewById(R.id.FindFitness2);
+        Cursor cursor = databaseHelper.selectExercise();
+
+        while (cursor.moveToNext()) {
+
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsPerMinute = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
+
+            if (containsCharacters(exerciseDescription, FitnessKeyword)) {
+
+                TableRow newRow = new TableRow(this);
+                newRow.setWeightSum(1);
+
+                TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                        0, // Width
+                        ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                        0.5f // Weight
+                );
+
+                TextView descView = new TextView(this);
+                descView.setText(exerciseDescription);
+                descView.setLayoutParams(textViewParams);
+
+                TextView calsView = new TextView(this);
+                calsView.setText("" + calsPerMinute);
+                calsView.setLayoutParams(textViewParams);
+
+                newRow.addView(descView);
+                newRow.addView(calsView);
+
+                FindFitness.removeAllViews();
+                FindFitness.addView(newRow);
+
+            } else {
+                FindFitness.removeAllViews();
+            }
+        }
+    }
+
 
 
     public void seeFoodPrev(View v){
