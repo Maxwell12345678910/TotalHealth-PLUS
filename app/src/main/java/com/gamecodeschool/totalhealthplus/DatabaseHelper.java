@@ -106,8 +106,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "FOREIGN KEY (Username) REFERENCES users(Username));";
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase db) {
 

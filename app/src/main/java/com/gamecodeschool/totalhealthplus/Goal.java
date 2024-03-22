@@ -8,6 +8,7 @@ public class Goal {
     private String description;
     private String category;
     private boolean isGoalMet;
+    public String colorString;
 
     public Goal(String newDate, String newDescription, String newCategory, boolean isMet){
         this.date = newDate;

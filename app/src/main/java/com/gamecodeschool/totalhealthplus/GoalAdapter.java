@@ -1,5 +1,6 @@
 package com.gamecodeschool.totalhealthplus;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,8 +77,20 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
     @Override
     public void onBindViewHolder(@NonNull GoalAdapter.ListItemHolder holder, int position) {
         Goal goal = goalEntries.get(position);
+
         holder.bind(goal, listener);
         holder.dateView.setText(goal.getDate());
+
+
+        //Foods
+        if (goal.getCategory().equals("Foods")){
+            holder.dateView.setBackgroundColor(Color.GREEN);
+
+        }
+        //Exercises
+        else if (goal.getCategory().equals("Exercise")){
+            holder.dateView.setBackgroundColor(Color.BLUE);
+        }
     }
 
     @Override
