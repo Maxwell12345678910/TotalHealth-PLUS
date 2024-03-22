@@ -12,7 +12,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
         android:onClick="seeFitnessAdd"
-        android:text="Add Today's Fitness Goal"
+        android:text="Add Today's Fitness "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

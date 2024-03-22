@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         initializeLogin();
 
+        databaseHelper.insertFood("Beets, 1/2 cup sliced", "Vegetables", 35, 85);
+
     }
 
 
