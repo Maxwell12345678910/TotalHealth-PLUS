@@ -315,7 +315,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 FindMyFood.addView(newRow);
 
             } else {
-                FindMyFood.removeAllViews();
+                while (FindMyFood.getChildCount() > 1) {
+                    FindMyFood.removeView(FindMyFood.getChildAt(FindMyFood.getChildCount() - 1));
+                }
             }
         }
     }
@@ -370,7 +372,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 FindFitness.addView(newRow);
 
             } else {
-                FindFitness.removeAllViews();
+                while (FindFitness.getChildCount() > 1) {
+                    FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
+                }
             }
         }
     }
