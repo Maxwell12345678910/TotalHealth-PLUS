@@ -36,6 +36,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String createIntakeTableQuery;
     public String intakeTableName;
 
+    //Goals table
+    public String prevGoalsMetTableName;
+    public String createPrevGoalsMetTableQuery;
+
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
@@ -91,7 +95,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "TotalCalsIn INT, " +
                         "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
 
+        prevGoalsMetTableName = "prev_goals_met";
+        createPrevGoalsMetTableQuery =
+                "CREATE TABLE " + prevGoalsMetTableName + "(GoalID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        "Username VARCHAR(50), " +
+                        "Date date, " +
+                        "Goal TEXT, " +
+                        "GoalMet INT, " +
+                        "GoalCategory VARCHAR(50), " +
+                        "FOREIGN KEY (Username) REFERENCES users(Username));";
     }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -101,6 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createExSelectTableQuery);
         db.execSQL(createActivityTableQuery);
         db.execSQL(createIntakeTableQuery);
+        db.execSQL(createPrevGoalsMetTableQuery);
 
     }
 
@@ -112,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + exSelectTableName);
         db.execSQL("DROP TABLE IF EXISTS " + activityTableName);
         db.execSQL("DROP TABLE IF EXISTS " + intakeTableName);
+        db.execSQL("DROP TABLE IF EXISTS " + prevGoalsMetTableName);
         onCreate(db);
 
     }
