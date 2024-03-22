@@ -53,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         databaseHelper = new DatabaseHelper(this);
 
+        databaseHelper.insertExercise("Running for duration of time", 15);
+        databaseHelper.insertExercise("Push ups", 10);
+        databaseHelper.insertExercise("walking for duration of time", 7);
+
         initializeLogin();
 
     }
@@ -307,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(calsView);
                 newRow.addView(weightView);
 
-                FindMyFood.removeAllViews();
+                //FindMyFood.removeAllViews();
                 FindMyFood.addView(newRow);
 
             } else {
@@ -325,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
         FitnessKeyword = SearchKeyword.getText().toString();
 
-        FindFoods();
+        showExercise();
         Log.d(TAG, "Text sent: " + FitnessKeyword);
     }
 
@@ -362,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(descView);
                 newRow.addView(calsView);
 
-                FindFitness.removeAllViews();
+                //FindFitness.removeAllViews();
                 FindFitness.addView(newRow);
 
             } else {
@@ -379,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void seeFoodAdd(View v){
         setContentView(R.layout.food_add);
-        FindFoods();
+        //FindFoods();
     }
 
     public void seeFoodBrowse(View view) {
@@ -393,6 +397,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void seeFitnessAdd(View v){
         setContentView(R.layout.fitness_add);
+        //showExercise();
     }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
