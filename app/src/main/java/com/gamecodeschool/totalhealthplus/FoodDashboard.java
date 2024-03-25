@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class ThirdFragment extends Fragment {
+public class FoodDashboard extends Fragment {
 
+    public FoodDashboard() {        // Required empty public constructor
 
-    public ThirdFragment() {
-        // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,6 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fitness_dashboard, container, false);
+        return inflater.inflate(R.layout.food_dashboard, container, false);
     }
 }

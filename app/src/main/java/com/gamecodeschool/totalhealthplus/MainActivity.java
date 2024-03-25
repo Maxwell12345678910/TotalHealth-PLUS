@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -194,9 +192,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
             // Initialize fragments
-            fragmentMap.put(R.id.person, new FirstFragment());
-            fragmentMap.put(R.id.home, new SecondFragment());
-            fragmentMap.put(R.id.settings, new ThirdFragment());
+            fragmentMap.put(R.id.person, new FoodDashboard());
+            fragmentMap.put(R.id.home, new MainDashboard());
+            fragmentMap.put(R.id.settings, new FitnessDashboard());
 
 
             getSupportFragmentManager().beginTransaction()
@@ -317,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new SecondFragment())
+                .replace(R.id.flFragment, new MainDashboard())
                 .commit();
     }
     public void seeFoodDash(View v){
@@ -327,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new FirstFragment())
+                .replace(R.id.flFragment, new FoodDashboard())
                 .commit();
 
     }
@@ -337,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new ThirdFragment())
+                .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
     }
 
