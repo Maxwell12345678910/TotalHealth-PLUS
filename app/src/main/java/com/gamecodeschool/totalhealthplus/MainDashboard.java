@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 
 
-public class SecondFragment extends Fragment {
+public class MainDashboard extends Fragment {
 
     ProgressBar progressBar;
     Button buttonDialog;
