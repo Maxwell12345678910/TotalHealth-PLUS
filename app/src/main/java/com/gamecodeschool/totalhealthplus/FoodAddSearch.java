@@ -18,6 +18,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FoodBrowse#newInstance} factory method to
@@ -61,26 +63,28 @@ public class FoodAddSearch extends Fragment {
     }
 
     public static boolean containsCharacters(String input, String characters) {
+        ArrayList<String> words = new ArrayList<>();
+        String curString = "";
 
-        if (input == null || characters == null) {
-            return false;
-        }
-
-        // Convert the input string and characters string to lowercase for case-insensitive comparison
-        input = input.toLowerCase();
-        Log.d(TAG, "Text sent: " + input);
-        characters = characters.toLowerCase();
-        Log.d(TAG, "Text sent: " + characters);
-
-        // Iterate through each character in the characters string
-        for (int i = 0; i < characters.length(); i++) {
-            char c = characters.charAt(i);
-            // Check if the input string contains the current character
-            if (input.indexOf(c) == -1) {
-                return false; // Return false if character not found
+        for (char c : input.toCharArray()) {
+            if (c != ' ') {
+                curString += c;
+            }
+            else{
+                words.add(curString);
+                curString = "";
             }
         }
-        return true; // Return true if all characters are found
+
+        words.add(curString);
+
+        for(int i = 0; i < words.size(); i++){
+            if (words.get(i).toLowerCase().contains(characters.toLowerCase())){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void FindFoods() {
@@ -94,7 +98,7 @@ public class FoodAddSearch extends Fragment {
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            if (containsCharacters(foodDescription.toString(), newKeyword)) {
+            if (containsCharacters(foodDescription, newKeyword)) {
                 TableRow newRow = new TableRow(requireContext());
                 newRow.setWeightSum(1);
 
