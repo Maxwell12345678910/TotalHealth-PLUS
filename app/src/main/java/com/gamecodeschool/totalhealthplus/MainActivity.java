@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -384,6 +386,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return resultList;
     }
+
+
 
 
     @SuppressLint("MissingInflatedId")
