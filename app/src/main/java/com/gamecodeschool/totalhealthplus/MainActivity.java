@@ -384,8 +384,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return resultList;
     }
-
-
+    
     @SuppressLint("MissingInflatedId")
     public void PreGoals(View v){
         setContentView(R.layout.fragment_past_goals);

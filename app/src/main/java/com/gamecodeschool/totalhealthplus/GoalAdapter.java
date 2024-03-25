@@ -81,7 +81,6 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
         holder.bind(goal, listener);
         holder.dateView.setText(goal.getDate());
 
-
         //Foods
         if (goal.getCategory().equals("Foods")){
             holder.dateView.setBackgroundColor(Color.GREEN);
