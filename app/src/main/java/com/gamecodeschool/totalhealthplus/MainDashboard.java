@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 public class MainDashboard extends Fragment {
 
     ProgressBar progressBar;
+    ProgressBar progressBar2;
     Button buttonDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,8 @@ public class MainDashboard extends Fragment {
 
         //set up the progressbar
         progressBar = view.findViewById(R.id.progBar);
-        updateProgress(50);
+        progressBar2 = view.findViewById(R.id.progBar2);
+        updateProgress(75);
 
         //set up the button goalSetButton
         buttonDialog = view.findViewById(R.id.goalSetButton);
@@ -52,6 +54,7 @@ public class MainDashboard extends Fragment {
     public void updateProgress(int progress) {
         if (progressBar != null) {
             progressBar.setProgress(progress);
+            progressBar2.setProgress(progress);
         }
     }
 
