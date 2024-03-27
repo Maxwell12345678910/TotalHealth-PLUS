@@ -447,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new SecondFragment())
+                .replace(R.id.flFragment, new MainDashboard())
                 .commit();
     }
     public void seeFoodDash(View v){
@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new FirstFragment())
+                .replace(R.id.flFragment, new MainDashboard())
                 .commit();
 
     }
@@ -467,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new ThirdFragment())
+                .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
     }
 
