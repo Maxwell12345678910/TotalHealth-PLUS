@@ -1,5 +1,8 @@
 package com.gamecodeschool.totalhealthplus;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static com.gamecodeschool.totalhealthplus.FoodAddSearch.containsCharacters;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -38,10 +41,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
 
+
     public static DatabaseHelper databaseHelper;
 
     private TableLayout browseFoodsTable;
-
 
     private boolean loginSuccess;
 
@@ -53,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     String result = "";
 
+    public static String FoodKeyword; // this is the keyword they type in for search
+    public static String FitnessKeyword;
+    private EditText SearchKeyword;
+    private TableLayout FindMyFood;
+    private TableLayout FindFitness;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
 
@@ -68,9 +76,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         databaseHelper = new DatabaseHelper(this);
 
         initializeLogin();
-
-//        databaseHelper.insertFood("Beets, 1/2 cup sliced", "Vegetables", 35, 85);
-
 
         // Get the current date
         Date currentDate = new Date();
@@ -159,8 +164,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     .commit();
             return true;
         }
-
-
         return false;
     }
 
@@ -288,12 +291,139 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
+    //search foods methods
+
+    public void StartSearch(View v) {
+
+        SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
+        FoodKeyword = SearchKeyword.getText().toString();
+
+        FindFoods();
+        Log.d(TAG, "Text sent: " + FoodKeyword);
+    }
+
+    public void FindFoods(){
+
+        FindMyFood = findViewById(R.id.FindFoods2);
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+            if (containsCharacters(foodDescription, FoodKeyword)) {
+                TableRow newRow = new TableRow(this);
+                newRow.setWeightSum(1);
+
+                TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                        0, // Width
+                        ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                        0.25f // Weight
+                );
+
+                TextView descView = new TextView(this);
+                descView.setText(foodDescription);
+                descView.setLayoutParams(textViewParams);
+
+                TextView catView = new TextView(this);
+                catView.setText(foodCategory);
+                catView.setLayoutParams(textViewParams);
+
+                TextView calsView = new TextView(this);
+                calsView.setText("" + calsPerServing);
+                calsView.setLayoutParams(textViewParams);
+
+                TextView weightView = new TextView(this);
+                weightView.setText("" + weightPerServ);
+                weightView.setLayoutParams(textViewParams);
+
+                newRow.addView(descView);
+                newRow.addView(catView);
+                newRow.addView(calsView);
+                newRow.addView(weightView);
+
+                //FindMyFood.removeAllViews();
+                FindMyFood.addView(newRow);
+
+            } else {
+                while (FindMyFood.getChildCount() > 1) {
+                    FindMyFood.removeView(FindMyFood.getChildAt(FindMyFood.getChildCount() - 1));
+                }
+            }
+        }
+    }
+
+    //end of search Food methods
+
+    // start of find fitness
+
+    public void StartSearchFit(View v) {
+
+        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
+        FitnessKeyword = SearchKeyword.getText().toString();
+
+        showExercise();
+        Log.d(TAG, "Text sent: " + FitnessKeyword);
+    }
+
+    public void showExercise(){
+
+        FindFitness = findViewById(R.id.FindFitness2);
+        Cursor cursor = databaseHelper.selectExercise();
+
+        while (cursor.moveToNext()) {
+
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsPerMinute = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
+
+            if (containsCharacters(exerciseDescription, FitnessKeyword)) {
+
+                TableRow newRow = new TableRow(this);
+                newRow.setWeightSum(1);
+
+                TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                        0, // Width
+                        ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                        0.5f // Weight
+                );
+
+                TextView descView = new TextView(this);
+                descView.setText(exerciseDescription);
+                descView.setLayoutParams(textViewParams);
+
+                TextView calsView = new TextView(this);
+                calsView.setText("" + calsPerMinute);
+                calsView.setLayoutParams(textViewParams);
+
+                newRow.addView(descView);
+                newRow.addView(calsView);
+
+                //FindFitness.removeAllViews();
+                FindFitness.addView(newRow);
+
+            } else {
+                while (FindFitness.getChildCount() > 1) {
+                    FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
+                }
+            }
+        }
+    }
+
+
 
     public void seeFoodPrev(View v){
         setContentView(R.layout.food_previous);
     }
 
-    public void seeFoodAdd(View v){setContentView(R.layout.food_add);}
+    public void seeFoodAdd(View v){
+        setContentView(R.layout.food_add);
+        //FindFoods();
+    }
 
     public void seeFoodBrowse(View view) {
         setContentView(R.layout.food_browse);
@@ -306,6 +436,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void seeFitnessAdd(View v){
         setContentView(R.layout.fitness_add);
+        //showExercise();
     }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
@@ -316,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new MainDashboard())
+                .replace(R.id.flFragment, new SecondFragment())
                 .commit();
     }
     public void seeFoodDash(View v){
@@ -326,7 +457,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new FoodDashboard())
+                .replace(R.id.flFragment, new FirstFragment())
                 .commit();
 
     }
@@ -336,7 +467,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new FitnessDashboard())
+                .replace(R.id.flFragment, new ThirdFragment())
                 .commit();
     }
 

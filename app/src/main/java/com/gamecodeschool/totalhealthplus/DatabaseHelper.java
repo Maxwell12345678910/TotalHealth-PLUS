@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String prevGoalsMetTableName;
     public String createPrevGoalsMetTableQuery;
 
+
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
@@ -254,6 +255,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Will return number of row if successful, -1 otherwise
         return insertingResult;
+    }
+
+    public Cursor selectExercise() {
+
+        SQLiteDatabase testDb = getReadableDatabase();
+        String select = "SELECT exercise_selections.* FROM exercise_selections";
+        String result = "";
+
+        return testDb.rawQuery(select, null);
     }
 
     public int deleteExercise(String exerciseDescription){
