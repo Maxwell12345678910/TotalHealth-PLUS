@@ -370,15 +370,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void StartSearchFit(View v) {
 
         SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
-        FitnessKeyword = SearchKeyword.getText().toString();
-
-        showExercise();
-        Log.d(TAG, "Text sent: " + FitnessKeyword);
-    }
-
-    public void showExercise(){
+        String word = SearchKeyword.getText().toString();
 
         FindFitness = findViewById(R.id.FindFitness2);
+
+        if (FindFitness.getChildCount() > 1){
+
+            for (int i = FindFitness.getChildCount() - 1; i > 0; i--){
+                FindFitness.removeViewAt(i);
+            }
+
+        }
+
+        findExercises(word);
+    }
+
+    public void findExercises(String keyword){
+
         Cursor cursor = databaseHelper.selectExercise();
 
         while (cursor.moveToNext()) {
@@ -387,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
             @SuppressLint("Range") float calsPerMinute = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
 
-            if (containsCharacters(exerciseDescription, FitnessKeyword)) {
+            if (containsCharacters(exerciseDescription, keyword) || keyword.equals("")) {
 
                 TableRow newRow = new TableRow(this);
                 newRow.setWeightSum(1);
@@ -412,10 +420,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //FindFitness.removeAllViews();
                 FindFitness.addView(newRow);
 
-            } else {
-                while (FindFitness.getChildCount() > 1) {
-                    FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
-                }
             }
         }
     }
