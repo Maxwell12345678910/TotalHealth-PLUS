@@ -62,29 +62,8 @@ public class FoodAddSearch extends Fragment {
         return fragment;
     }
 
-    public static boolean containsCharacters(String input, String characters) {
-        ArrayList<String> words = new ArrayList<>();
-        String curString = "";
-
-        for (char c : input.toCharArray()) {
-            if (c != ' ') {
-                curString += c;
-            }
-            else{
-                words.add(curString);
-                curString = "";
-            }
-        }
-
-        words.add(curString);
-
-        for(int i = 0; i < words.size(); i++){
-            if (words.get(i).toLowerCase().contains(characters.toLowerCase())){
-                return true;
-            }
-        }
-
-        return false;
+    public static boolean containsCharacters(String wordToCheck, String wordGiven) {
+        return wordToCheck.toLowerCase().contains(wordGiven.toLowerCase());
     }
 
     public void FindFoods() {
