@@ -272,6 +272,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         FindMyFood = findViewById(R.id.FindFoods2);
         Cursor cursor = databaseHelper.selectFoods();
 
+        while (FindMyFood.getChildCount() > 1) {
+            FindMyFood.removeView(FindMyFood.getChildAt(FindMyFood.getChildCount() - 1));
+        }
+
         while (cursor.moveToNext()){
 
             @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
@@ -281,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
             if (containsCharacters(foodDescription, FoodKeyword)) {
+
                 TableRow newRow = new TableRow(this);
                 newRow.setWeightSum(1);
 
@@ -313,11 +318,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 //FindMyFood.removeAllViews();
                 FindMyFood.addView(newRow);
-
-            } else {
-                while (FindMyFood.getChildCount() > 1) {
-                    FindMyFood.removeView(FindMyFood.getChildAt(FindMyFood.getChildCount() - 1));
-                }
             }
         }
     }
@@ -339,6 +339,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         FindFitness = findViewById(R.id.FindFitness2);
         Cursor cursor = databaseHelper.selectExercise();
+
+        while (FindFitness.getChildCount() > 1) {
+            FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
+        }
 
         while (cursor.moveToNext()) {
 
@@ -371,10 +375,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //FindFitness.removeAllViews();
                 FindFitness.addView(newRow);
 
-            } else {
-                while (FindFitness.getChildCount() > 1) {
-                    FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
-                }
             }
         }
     }
