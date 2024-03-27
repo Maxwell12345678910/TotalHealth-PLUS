@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.login_page);
 
-
         databaseHelper = new DatabaseHelper(this);
 
         initializeLogin();
@@ -296,15 +295,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void StartSearch(View v) {
 
         SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
-        FoodKeyword = SearchKeyword.getText().toString();
-
-        FindFoods();
-        Log.d(TAG, "Text sent: " + FoodKeyword);
-    }
-
-    public void FindFoods(){
+        String word = SearchKeyword.getText().toString();
 
         FindMyFood = findViewById(R.id.FindFoods2);
+
+        if (FindMyFood.getChildCount() > 1){
+
+            for (int i = FindMyFood.getChildCount() - 1; i > 0; i--){
+                FindMyFood.removeViewAt(i);
+            }
+
+        }
+
+        FindFoods(word);
+        //Log.d(TAG, "Text sent: " + FoodKeyword);
+    }
+
+    public void FindFoods(String keyword){
+
         Cursor cursor = databaseHelper.selectFoods();
 
         while (cursor.moveToNext()){
@@ -315,7 +323,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            if (containsCharacters(foodDescription, FoodKeyword)) {
+            if (containsCharacters(foodDescription, keyword) || keyword.equals("")) {
+
                 TableRow newRow = new TableRow(this);
                 newRow.setWeightSum(1);
 
@@ -349,12 +358,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //FindMyFood.removeAllViews();
                 FindMyFood.addView(newRow);
 
-            } else {
-                while (FindMyFood.getChildCount() > 1) {
-                    FindMyFood.removeView(FindMyFood.getChildAt(FindMyFood.getChildCount() - 1));
-                }
             }
         }
+        cursor.close();
     }
 
     //end of search Food methods
