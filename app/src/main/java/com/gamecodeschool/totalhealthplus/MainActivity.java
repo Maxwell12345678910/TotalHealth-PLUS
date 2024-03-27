@@ -38,15 +38,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
 
-
     public static DatabaseHelper databaseHelper;
 
     private TableLayout browseFoodsTable;
 
+
     private boolean loginSuccess;
-
-
-//    private TableLayout browseFoodsTable, browseExerciseTable;
 
     public static List<Goal> currentUserGoalList = new ArrayList<>();
 
