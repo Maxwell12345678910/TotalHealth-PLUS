@@ -381,6 +381,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         FindFitness = findViewById(R.id.FindFitness2);
         Cursor cursor = databaseHelper.selectExercise();
 
+        while (FindFitness.getChildCount() > 1) {
+            FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
+        }
+
         while (cursor.moveToNext()) {
 
             @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
@@ -412,10 +416,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //FindFitness.removeAllViews();
                 FindFitness.addView(newRow);
 
-            } else {
-                while (FindFitness.getChildCount() > 1) {
-                    FindFitness.removeView(FindFitness.getChildAt(FindFitness.getChildCount() - 1));
-                }
             }
         }
     }
