@@ -10,11 +10,11 @@
         android:id="@+id/button"
         android:layout_width="256dp"
         android:layout_height="48dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="76dp"
         android:onClick="seeFoodAdd"
         android:text="Add Today's Nutrition"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.561"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -48,12 +48,22 @@
         android:id="@+id/textView"
         android:layout_width="235dp"
         android:layout_height="34dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
         android:text="Nutrition Dashboard"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="113dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="148dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/food_logo_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

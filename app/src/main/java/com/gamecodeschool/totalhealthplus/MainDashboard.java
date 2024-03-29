@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 public class MainDashboard extends Fragment {
 
     ProgressBar progressBar;
-    ProgressBar progressBar2;
     Button buttonDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class MainDashboard extends Fragment {
 
         //set up the progressbar
         progressBar = view.findViewById(R.id.progBar);
-        progressBar2 = view.findViewById(R.id.progBar2);
         updateProgress(75);
 
         //set up the button goalSetButton
@@ -54,7 +52,7 @@ public class MainDashboard extends Fragment {
     public void updateProgress(int progress) {
         if (progressBar != null) {
             progressBar.setProgress(progress);
-            progressBar2.setProgress(progress);
+
         }
     }
 
@@ -68,21 +66,16 @@ public class MainDashboard extends Fragment {
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String userInput = input.getText().toString();
-                // Do something with the user input
-                // For example, you can display it in a Toast
-                // Toast.makeText(getActivity(), "User Input: " + userInput, Toast.LENGTH_SHORT).show();
-            }
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            String userInput = input.getText().toString();
+            // Do something with the user input
+            // For example, you can display it in a Toast
+            // Toast.makeText(getActivity(), "User Input: " + userInput, Toast.LENGTH_SHORT).show();
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) ->
+                dialog.cancel()
+        );
 
         builder.show();
     }
