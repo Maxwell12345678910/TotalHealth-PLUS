@@ -86,7 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "TotalCalsBurned FLOAT, " +
                         "FOREIGN KEY (ExerciseDescription) REFERENCES exercise_selections(ExerciseDescription));";
 
-        //record of intake of foods that pulls from the
         intakeTableName = "daily_intake";
         createIntakeTableQuery =
                 "CREATE TABLE " + intakeTableName + "(IntakeID INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -343,6 +342,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Will return number of row if successful, -1 otherwise
         return insertingResult;
+
+    }
+
+    @SuppressLint("Range")
+    public int calculateCalories(String food, int servings){
+
+        int result = 0;
+        int caloriesPerServing = 0;
+
+        SQLiteDatabase testDb = getReadableDatabase();
+
+        String calculateCalsQuery = "SELECT CaloriesPerServing FROM foods WHERE FoodDescription = " + "'" + food + "'";
+        Cursor cursor = testDb.rawQuery(calculateCalsQuery, null);
+
+        if (cursor.moveToFirst()) {
+            caloriesPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+        }
+
+        cursor.close();
+        testDb.close();
+
+        result = servings * caloriesPerServing;
+
+        return result;
 
     }
 }

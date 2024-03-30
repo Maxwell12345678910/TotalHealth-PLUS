@@ -19,10 +19,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.SparseArray;
 import android.view.MenuItem;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private TableLayout FindFitness;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
+    private ArrayList<String> foodSpinnerList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -355,7 +359,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(calsView);
                 newRow.addView(weightView);
 
-                //FindMyFood.removeAllViews();
                 FindMyFood.addView(newRow);
 
             }
@@ -446,7 +449,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
     public void seeFitnessAdd(View v){
         setContentView(R.layout.fitness_add);
-        //showExercise();
     }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
@@ -460,6 +462,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .replace(R.id.flFragment, new MainDashboard())
                 .commit();
     }
+
     public void seeFoodDash(View v){
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -471,6 +474,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .commit();
 
     }
+
     public void seeFitnessDash(View v){
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -479,6 +483,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
+    }
+
+    public void seeAddIntake(View v){
+
+        setContentView(R.layout.add_today_intake);
+
+        populateSpinners();
+
     }
 
     @Override
@@ -541,6 +553,51 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         goalRecyclerView.setItemAnimator(new DefaultItemAnimator());
         goalRecyclerView.setAdapter(goalAdapter);
+    }
+
+    public void populateSpinners(){
+
+        foodSpinnerList = new ArrayList<>();
+
+        populateFoodSpinnerList();
+
+        // Create an ArrayAdapter using the foods data
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, foodSpinnerList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Get reference to foods selection spinner
+        Spinner spinner = findViewById(R.id.foodSpinner);
+
+        // Set the adapter to the spinner
+        spinner.setAdapter(adapter);
+    }
+
+    public void populateFoodSpinnerList(){
+
+        Cursor cursor = databaseHelper.selectFoods();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
+            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
+            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
+
+            foodSpinnerList.add(foodDescription);
+        }
+    }
+
+    public void submitIntake(View view){
+
+        Spinner foodSpinner = findViewById(R.id.foodSpinner);
+        Spinner servingsSpinner = findViewById(R.id.servingsSpinner);
+
+        String foodSpinnerVal = foodSpinner.getSelectedItem().toString();
+        int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString());
+
+        databaseHelper.insertFoodIntake(dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
+        Toast.makeText(this, "Intake inserted successfully.", Toast.LENGTH_SHORT).show();
     }
 
 }
