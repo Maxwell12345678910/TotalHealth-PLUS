@@ -120,7 +120,7 @@ public class FitnessAddSearch extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fitness_add, container, false);
 
-        FindMyFitness = (TableLayout) rootView.findViewById(R.id.FindFitness2);
+//        FindMyFitness = (TableLayout) rootView.findViewById(R.id.FindFitness2);
         //FindFoods();
 
         return rootView;

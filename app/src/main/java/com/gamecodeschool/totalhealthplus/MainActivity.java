@@ -1,6 +1,5 @@
 package com.gamecodeschool.totalhealthplus;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.gamecodeschool.totalhealthplus.FoodAddSearch.containsCharacters;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -324,23 +322,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     // start of find fitness
 
-    public void StartSearchFit(View v) {
-
-        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
-        String word = SearchKeyword.getText().toString();
-
-        FindFitness = findViewById(R.id.FindFitness2);
-
-        if (FindFitness.getChildCount() > 1){
-
-            for (int i = FindFitness.getChildCount() - 1; i > 0; i--){
-                FindFitness.removeViewAt(i);
-            }
-
-        }
-
-        findExercises(word);
-    }
+//    public void StartSearchFit(View v) {
+//
+//        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
+//        String word = SearchKeyword.getText().toString();
+//
+//        FindFitness = findViewById(R.id.FindFitness2);
+//
+//        if (FindFitness.getChildCount() > 1){
+//
+//            for (int i = FindFitness.getChildCount() - 1; i > 0; i--){
+//                FindFitness.removeViewAt(i);
+//            }
+//
+//        }
+//
+//        findExercises(word);
+//    }
 
     public void findExercises(String keyword){
 
@@ -397,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.fitness_previous);
     }
     public void seeFitnessAdd(View v){
-        setContentView(R.layout.fitness_add);
+        setContentView(R.layout.add_completed_exercise);
     }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
@@ -413,13 +411,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void seeFoodDash(View v){
-        setContentView(R.layout.food_dashboard);
+        setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flFragment, new MainDashboard())
+                .replace(R.id.flFragment, new FoodDashboard())
                 .commit();
 
     }
@@ -434,12 +432,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .commit();
     }
 
-    public void seeAddIntake(View v){
+    public void seeAddFoodIntake(View v){
 
         setContentView(R.layout.add_today_intake);
 
-        populateSpinners();
+        populateSpinnersFood();
 
+    }
+
+
+    //still need to set this up for fitness see comment inside
+    public void seeAddCompletedExercise(View v){
+
+        setContentView(R.layout.add_completed_exercise);
+
+        populateSpinnersExercise(); //we still need to make this
+
+    }
+
+    private void populateSpinnersExercise() {
     }
 
     @Override
@@ -504,7 +515,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         goalRecyclerView.setAdapter(goalAdapter);
     }
 
-    public void populateSpinners(){
+    public void populateSpinnersFood(){
 
         foodSpinnerList = new ArrayList<>();
 

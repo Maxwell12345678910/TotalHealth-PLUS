@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:width="256dp"
-        android:onClick="seeFitnessPrev"
+        android:onClick="seeAddCompletedExercise"
         android:text="Previous Exercise Activities"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
