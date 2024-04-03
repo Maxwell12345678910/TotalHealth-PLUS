@@ -67,12 +67,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
     private ArrayList<String> foodSpinnerList;
+    private String currentUsername;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        currentUsername = "";
 
         setContentView(R.layout.login_page);
 
@@ -183,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
         if (loginSuccess){
+            currentUsername = usernameCheck;
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
             currentUserGoalList = getGoalsForUser(usernameCheck);
@@ -596,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString();
         int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString());
 
-        databaseHelper.insertFoodIntake(dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
+        databaseHelper.insertFoodIntake(currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
         Toast.makeText(this, "Intake inserted successfully.", Toast.LENGTH_SHORT).show();
     }
 

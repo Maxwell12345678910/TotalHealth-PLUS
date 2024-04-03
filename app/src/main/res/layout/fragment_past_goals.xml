@@ -15,11 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="177dp"
+        android:layout_marginBottom="52dp"
         android:background="#000000"
         android:onClick="seeMainDash"
         android:text="Back to Dashboard"
-        app:layout_constraintBottom_toTopOf="@+id/goalRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/editTextText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,39 +27,68 @@
         android:id="@+id/editTextText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="450dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="19dp"
         android:ems="10"
         android:inputType="text"
         android:minHeight="48dp"
         android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="250dp"
-        android:layout_marginBottom="450dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="27dp"
         android:text="Search"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editTextText"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/editTextText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/goalRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginEnd="55dp"
+        android:layout_marginStart="54dp"
+        android:layout_marginEnd="54dp"
         android:layout_marginBottom="89dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="31dp"
+        android:text="Fitness = Blue"
+        android:textColor="#0000FF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/goalRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="31dp"
+        android:text="Diet = Green"
+        android:textColor="#00FF00"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/goalRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,11 +89,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         intakeTableName = "daily_intake";
         createIntakeTableQuery =
                 "CREATE TABLE " + intakeTableName + "(IntakeID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "Username VARCHAR(50), " +
                         "Date date, " +
                         "FoodDescription VARCHAR(50), " +
                         "Servings INT, " +
                         "TotalCalsIn INT, " +
-                        "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription));";
+                        "FOREIGN KEY (FoodDescription) REFERENCES foods(FoodDescription)" +
+                        "FOREIGN KEY (Username) REFERENCES users(Username));";
 
         prevGoalsMetTableName = "prev_goals_met";
         createPrevGoalsMetTableQuery =
@@ -299,10 +301,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{date, exerciseDescription});
     }
 
-    public long insertFoodIntake(String date, String foodDescription, int servings, int totalCalsIn){
+    public long insertFoodIntake(String username, String date, String foodDescription, int servings, int totalCalsIn){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put("Username", username);
         values.put("Date", date);
         values.put("FoodDescription", foodDescription);
         values.put("Servings", servings);
