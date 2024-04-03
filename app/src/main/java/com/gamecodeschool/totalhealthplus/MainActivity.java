@@ -381,19 +381,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-    public void seeFoodPrev(View v){
-        setContentView(R.layout.food_previous);
-    }
-
     public void seeFoodAdd(View v){
         setContentView(R.layout.food_add);
         //FindFoods();
     }
 
-
-    public void seeFitnessPrev(View v){
-        setContentView(R.layout.fitness_previous);
-    }
     public void seeFitnessAdd(View v){
         setContentView(R.layout.add_completed_exercise);
     }
