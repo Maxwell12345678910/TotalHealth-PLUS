@@ -248,55 +248,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    public void showFoods(){
-
-        browseFoodsTable = findViewById(R.id.browseFoodsTable);
-        Cursor cursor = databaseHelper.selectFoods();
-
-        while (cursor.moveToNext()){
-
-            @SuppressLint("Range") int foodID = cursor.getInt(cursor.getColumnIndex("foodID"));
-            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
-            @SuppressLint("Range") String foodCategory = cursor.getString(cursor.getColumnIndex("FoodCategory"));
-            @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
-            @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
-
-
-            TableRow newRow = new TableRow(this);
-            newRow.setWeightSum(1);
-
-            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
-                    0, // Width
-                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
-                    0.25f // Weight
-            );
-
-            TextView descView = new TextView(this);
-            descView.setText(foodDescription);
-            descView.setLayoutParams(textViewParams);
-
-            TextView catView = new TextView(this);
-            catView.setText(foodCategory);
-            catView.setLayoutParams(textViewParams);
-
-            TextView calsView = new TextView(this);
-            calsView.setText("" + calsPerServing);
-            calsView.setLayoutParams(textViewParams);
-
-            TextView weightView = new TextView(this);
-            weightView.setText("" + weightPerServ);
-            weightView.setLayoutParams(textViewParams);
-
-            newRow.addView(descView);
-            newRow.addView(catView);
-            newRow.addView(calsView);
-            newRow.addView(weightView);
-
-            browseFoodsTable.addView(newRow);
-        }
-    }
-
-
     //search foods methods
 
     public void StartSearch(View v) {
@@ -441,11 +392,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //FindFoods();
     }
 
-    public void seeFoodBrowse(View view) {
-        setContentView(R.layout.food_browse);
-        showFoods();
-
-    }
 
     public void seeFitnessPrev(View v){
         setContentView(R.layout.fitness_previous);
