@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void seeFoodDash(View v){
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.food_dashboard);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
