@@ -14,17 +14,17 @@ import java.util.List;
 
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder> {
-    private List <Goal> goalEntries;
+    private List <CalorieGoal> calorieGoalEntries;
     private OnItemClickListener listener;
     public interface OnItemClickListener {
-        void onItemClick(Goal Goal);
+        void onItemClick(CalorieGoal CalorieGoal);
     }
 
-    public GoalAdapter(List <Goal> newGoalEntries, OnItemClickListener newListener){
-        goalEntries = new ArrayList<>();
+    public GoalAdapter(List <CalorieGoal> newCalorieGoalEntries, OnItemClickListener newListener){
+        calorieGoalEntries = new ArrayList<>();
 
-        for (Goal entry: newGoalEntries){
-            goalEntries.add(entry);
+        for (CalorieGoal entry: newCalorieGoalEntries){
+            calorieGoalEntries.add(entry);
         }
         this.listener = newListener;
 
@@ -32,30 +32,30 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
     }
 
     // Method to add a new top score record
-    public void addGoal(Goal scoreToAdd) {
-        goalEntries.add(scoreToAdd);
+    public void addGoal(CalorieGoal scoreToAdd) {
+        calorieGoalEntries.add(scoreToAdd);
         notifyDataSetChanged(); // Notify adapter that dataset has changed
     }
 
-    public void updateGoals(List<Goal> newScoreEntries) {
-        goalEntries.clear();
+    public void updateGoals(List<CalorieGoal> newScoreEntries) {
+        calorieGoalEntries.clear();
 
-        for (Goal entry : newScoreEntries){
-            goalEntries.add(entry);
+        for (CalorieGoal entry : newScoreEntries){
+            calorieGoalEntries.add(entry);
         }
 
         notifyDataSetChanged();
     }
 
-    public void deleteGoal(Goal entryToRemove) {
+    public void deleteGoal(CalorieGoal entryToRemove) {
 
-        if (goalEntries.size() > 3){
+        if (calorieGoalEntries.size() > 3){
             int positionRemoved = 0;
 
-            for (Goal goal:goalEntries){
+            for (CalorieGoal calorieGoal : calorieGoalEntries){
 
-                if (goal == entryToRemove){
-                    goalEntries.remove(entryToRemove);
+                if (calorieGoal == entryToRemove){
+                    calorieGoalEntries.remove(entryToRemove);
                     break;
                 }
                 positionRemoved++;
@@ -76,26 +76,26 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
 
     @Override
     public void onBindViewHolder(@NonNull GoalAdapter.ListItemHolder holder, int position) {
-        Goal goal = goalEntries.get(position);
+        CalorieGoal calorieGoal = calorieGoalEntries.get(position);
 
-        holder.bind(goal, listener);
-        holder.dateView.setText(goal.getDate());
+        holder.bind(calorieGoal, listener);
+        holder.dateView.setText(calorieGoal.getDate());
 
 
         //Foods
-        if (goal.getCategory().equals("Foods")){
+        if (calorieGoal.getCategory().equals("Foods")){
             holder.dateView.setBackgroundColor(Color.GREEN);
 
         }
         //Exercises
-        else if (goal.getCategory().equals("Exercise")){
+        else if (calorieGoal.getCategory().equals("Exercise")){
             holder.dateView.setBackgroundColor(Color.BLUE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return goalEntries.size();
+        return calorieGoalEntries.size();
     }
 
     public class ListItemHolder extends RecyclerView.ViewHolder {
@@ -105,8 +105,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
             dateView = view.findViewById(R.id.dateListView);
         }
 
-        public void bind(Goal goal, OnItemClickListener listener) {
-            itemView.setOnClickListener(v -> listener.onItemClick(goal));
+        public void bind(CalorieGoal calorieGoal, OnItemClickListener listener) {
+            itemView.setOnClickListener(v -> listener.onItemClick(calorieGoal));
         }
     }
 }

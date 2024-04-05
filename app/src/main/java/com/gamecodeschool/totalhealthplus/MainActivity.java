@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private boolean loginSuccess;
 
-    public static List<Goal> currentUserGoalList = new ArrayList<>();
+    public static List<CalorieGoal> currentUserCalorieGoalList = new ArrayList<>();
 
     public static GoalAdapter goalAdapter;
     private RecyclerView goalRecyclerView;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
     private ArrayList<String> foodSpinnerList;
+    private ArrayList<String> exerciseSpinnerList;
     private String currentUsername;
 
     @SuppressLint("MissingInflatedId")
@@ -186,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             currentUsername = usernameCheck;
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
-            currentUserGoalList = getGoalsForUser(usernameCheck);
-            goalAdapter = new GoalAdapter(currentUserGoalList, this);
+            currentUserCalorieGoalList = getGoalsForUser(usernameCheck);
+            goalAdapter = new GoalAdapter(currentUserCalorieGoalList, this);
 
 
 
@@ -379,15 +380,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-
-
     public void seeFoodAdd(View v){
         setContentView(R.layout.food_add);
-        //FindFoods();
     }
 
     public void seeFitnessAdd(View v){
         setContentView(R.layout.add_completed_exercise);
+
+        populateSpinnersExercise();
     }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
@@ -442,21 +442,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-    private void populateSpinnersExercise() {
-    }
 
     @Override
-    public void onItemClick(Goal goal) {
+    public void onItemClick(CalorieGoal calorieGoal) {
         GoalDetailsDialog goalDetailsDialog = new GoalDetailsDialog();
 
-        goalDetailsDialog.setGoalEntry(goal);
+        goalDetailsDialog.setGoalEntry(calorieGoal);
 
         goalDetailsDialog.show(getSupportFragmentManager(), "123");
     }
 
-    public List<Goal> getGoalsForUser(String username){
+    public List<CalorieGoal> getGoalsForUser(String username){
 
-        List<Goal> resultList = new ArrayList<>();
+        List<CalorieGoal> resultList = new ArrayList<>();
         String getGoalsQuery = "SELECT Date, Goal, GoalMet, GoalCategory FROM prev_goals_met WHERE Username = " + username;
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
@@ -472,7 +470,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     @SuppressLint("Range") int goalMet = cursor.getInt(cursor.getColumnIndex("GoalMet"));
                     @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex("GoalCategory"));
 
-                    resultList.add(new Goal(dateStr, description, category, goalMet == 1)); // Assuming 1 represents true for goal met
+                    resultList.add(new CalorieGoal(dateStr, description, category, goalMet == 1)); // Assuming 1 represents true for goal met
                 } while (cursor.moveToNext());
             }
         }
@@ -536,11 +534,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            foodSpinnerList.add(foodDescription);
+            foodSpinnerList.add(foodDescription + " - Calories Per Serving: " + calsPerServing);
         }
     }
 
-    public void submitIntake(View view){
+    public void submitFoodIntake(View view){
 
         Spinner foodSpinner = findViewById(R.id.foodSpinner);
         Spinner servingsSpinner = findViewById(R.id.servingsSpinner);
@@ -550,6 +548,49 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         databaseHelper.insertFoodIntake(currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
         Toast.makeText(this, "Intake inserted successfully.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void populateSpinnersExercise(){
+
+        exerciseSpinnerList = new ArrayList<>();
+
+        populateExerciseSpinnerList();
+
+        // Create an ArrayAdapter using the foods data
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, exerciseSpinnerList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Get reference to foods selection spinner
+        Spinner spinner = findViewById(R.id.exerciseSpinner);
+
+        // Set the adapter to the spinner
+        spinner.setAdapter(adapter);
+    }
+
+    public void populateExerciseSpinnerList(){
+
+        Cursor cursor = databaseHelper.selectExercise();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsPerMin = cursor.getFloat(cursor.getColumnIndex("CalsBurnedPerMin"));
+
+            exerciseSpinnerList.add(exerciseDescription + " - Calories Burned Per Min: " + calsPerMin);
+        }
+    }
+
+    public void submitExercise(View view){
+
+        Spinner exerciseSpinner = findViewById(R.id.exerciseSpinner);
+        Spinner minutesSpinner = findViewById(R.id.minutesSpinner);
+
+        String exerciseSpinnerVal = exerciseSpinner.getSelectedItem().toString();
+        int minSpinnerVal = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
+
+        databaseHelper.insertActivity(currentUsername, dateString, exerciseSpinnerVal, (float) minSpinnerVal, databaseHelper.calculateActivityBurned(exerciseSpinnerVal, minSpinnerVal));
+        Toast.makeText(this, "Activity inserted successfully.", Toast.LENGTH_SHORT).show();
     }
 
 }

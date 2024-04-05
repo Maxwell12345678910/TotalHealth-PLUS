@@ -10,12 +10,10 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import java.util.List;
-
 public class GoalDetailsDialog extends DialogFragment {
     View dialogView;
     ListView goalsListView;
-    Goal goal;
+    CalorieGoal calorieGoal;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -28,7 +26,7 @@ public class GoalDetailsDialog extends DialogFragment {
 
         //Retrieve text views and set values
         TextView view = dialogView.findViewById(R.id.textView9);
-        view.setText(goal.getDescription());
+        view.setText(calorieGoal.getDescription());
 
         builder.setView(dialogView).setMessage("Goal Details");
 
@@ -43,7 +41,7 @@ public class GoalDetailsDialog extends DialogFragment {
         return builder.create();
     }
 
-    public void setGoalEntry(Goal newGoalEntry){
-        this.goal = newGoalEntry;
+    public void setGoalEntry(CalorieGoal newCalorieGoalEntry){
+        this.calorieGoal = newCalorieGoalEntry;
     }
 }

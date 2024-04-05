@@ -1,16 +1,13 @@
 package com.gamecodeschool.totalhealthplus;
 
-import java.util.Date;
-
-public class Goal {
+public class CalorieGoal {
 
     private String date;
     private String description;
     private String category;
     private boolean isGoalMet;
-    public String colorString;
 
-    public Goal(String newDate, String newDescription, String newCategory, boolean isMet){
+    public CalorieGoal(String newDate, String newDescription, String newCategory, boolean isMet){
         this.date = newDate;
         this.description = newDescription;
         this.category = newCategory;

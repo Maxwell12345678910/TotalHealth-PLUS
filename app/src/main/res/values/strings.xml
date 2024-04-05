@@ -11,5 +11,12 @@
         <item>5</item>
     </string-array>
 
+    <string-array name="minutes_spinner_options">
+        <item>5 mins</item>
+        <item>10 mins</item>
+        <item>30 mins</item>
+        <item>60 mins</item>
+    </string-array>
+
 </resources>
 

@@ -275,10 +275,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.delete("exercise_selections", "ExerciseDescription=?", new String[]{exerciseDescription});
     }
 
-    public long insertActivity(String dateActive, String exDesc, float duration, float totalCalsBurned){
+    public long insertActivity(String username, String dateActive, String exDesc, float duration, float totalCalsBurned){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        values.put("Username", username);
         values.put("DateActive", dateActive);
         values.put("ExerciseDescription", exDesc);
         values.put("DurationInMin", duration);
@@ -370,5 +371,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result;
 
+    }
+
+    @SuppressLint("Range")
+    public float calculateActivityBurned(String exerciseSpinnerVal, int minSpinnerVal) {
+
+        int result = 0;
+        int caloriesPerMin = 0;
+
+        SQLiteDatabase testDb = getReadableDatabase();
+
+        String calculateCalsQuery = "SELECT CalsBurnedPerMin FROM exercise_selections WHERE ExerciseDescription = " + "'" + exerciseSpinnerVal + "'";
+        Cursor cursor = testDb.rawQuery(calculateCalsQuery, null);
+
+        if (cursor.moveToFirst()) {
+            caloriesPerMin = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
+        }
+
+        cursor.close();
+        testDb.close();
+
+        result = minSpinnerVal * caloriesPerMin;
+
+        return result;
     }
 }
