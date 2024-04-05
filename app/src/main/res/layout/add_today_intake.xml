@@ -50,4 +50,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/foodSpinner" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:text="Servings"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/servingsSpinner"
+        app:layout_constraintStart_toStartOf="@+id/servingsSpinner" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/foodSpinner"
+        app:layout_constraintStart_toStartOf="@+id/foodSpinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>

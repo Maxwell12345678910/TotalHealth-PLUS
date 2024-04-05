@@ -534,7 +534,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") int calsPerServing = cursor.getInt(cursor.getColumnIndex("CaloriesPerServing"));
             @SuppressLint("Range") float weightPerServ = cursor.getInt(cursor.getColumnIndex("WeightPerServingInGrams"));
 
-            foodSpinnerList.add(foodDescription + " - Calories Per Serving: " + calsPerServing);
+            foodSpinnerList.add(foodDescription);
         }
     }
 
