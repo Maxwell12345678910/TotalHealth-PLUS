@@ -88,6 +88,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Format the current date as a string
         dateString = formatter.format(currentDate);
+
+
+         databaseHelper.insertFood("Grilled Chicken Breast", "Protein", 231, 100);
+         databaseHelper.insertFood("Steamed Broccoli", "Vegetable", 55, 150);
+         databaseHelper.insertFood("Brown Rice", "Grain", 112, 150);
+         databaseHelper.insertFood("Fresh Spinach Salad", "Vegetable", 23, 50);
+         databaseHelper.insertFood("Salmon Fillet", "Protein", 280, 120);
+         databaseHelper.insertFood("Quinoa", "Grain", 222, 100);
+         databaseHelper.insertFood("Avocado", "Fruit", 160, 200);
+         databaseHelper.insertFood("Greek Yogurt", "Dairy", 100, 150);
+         databaseHelper.insertFood("Mixed Nuts", "Snack", 173, 28);
+         databaseHelper.insertFood("Banana", "Fruit", 105, 120);
+
     }
 
 
