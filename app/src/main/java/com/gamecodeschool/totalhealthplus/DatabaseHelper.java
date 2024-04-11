@@ -5,12 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public String db_name;
@@ -44,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
-        super(context, "totalhealthplus.DB", null, 2);
+        super(context, "totalhealthplus.DB", null, 4);
 
         db_name = "totalhealthplus.DB";
         db_version = 2;
@@ -102,9 +97,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + prevGoalsMetTableName + "(GoalID INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "Username VARCHAR(50), " +
                         "Date date, " +
-                        "Goal TEXT, " +
+                        "Goal INT, " +
                         "GoalMet INT, " +
-                        "GoalCategory VARCHAR(50), " +
                         "FOREIGN KEY (Username) REFERENCES users(Username));";
     }
 
@@ -330,15 +324,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{date, foodDescription, Integer.toString(servings)});
     }
 
-    public long insertGoal(String username, String date, String description, String category){
+    public long insertCalorieGoal(String username, String date, int calories){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("Username", username);
         values.put("Date", date);
-        values.put("Goal", description);
-        values.put("GoalMet",0);
-        values.put("GoalCategory", category);
+        values.put("Goal", calories);
+        values.put("GoalMet", 0);
 
         long insertingResult = database.insert("prev_goals_met", null, values);
 

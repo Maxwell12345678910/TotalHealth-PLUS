@@ -83,13 +83,12 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.ListItemHolder
 
 
         //Foods
-        if (calorieGoal.getCategory().equals("Foods")){
+        if (calorieGoal.isGoalMet()){
             holder.dateView.setBackgroundColor(Color.GREEN);
-
         }
         //Exercises
-        else if (calorieGoal.getCategory().equals("Exercise")){
-            holder.dateView.setBackgroundColor(Color.BLUE);
+        else if (!calorieGoal.isGoalMet()){
+            holder.dateView.setBackgroundColor(Color.RED);
         }
     }
 

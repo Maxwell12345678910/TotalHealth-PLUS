@@ -26,7 +26,7 @@ public class GoalDetailsDialog extends DialogFragment {
 
         //Retrieve text views and set values
         TextView view = dialogView.findViewById(R.id.textView9);
-        view.setText(calorieGoal.getDescription());
+        view.setText("" + calorieGoal.getCalories());
 
         builder.setView(dialogView).setMessage("Goal Details");
 

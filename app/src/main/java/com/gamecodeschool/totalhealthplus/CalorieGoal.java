@@ -3,14 +3,12 @@ package com.gamecodeschool.totalhealthplus;
 public class CalorieGoal {
 
     private String date;
-    private String description;
-    private String category;
+    private int calories;
     private boolean isGoalMet;
 
-    public CalorieGoal(String newDate, String newDescription, String newCategory, boolean isMet){
+    public CalorieGoal(String newDate, int newCals, boolean isMet){
         this.date = newDate;
-        this.description = newDescription;
-        this.category = newCategory;
+        this.calories = newCals;
         this.isGoalMet = isMet;
     }
 
@@ -22,20 +20,12 @@ public class CalorieGoal {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
+    public int getCalories() {
+        return calories;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCalories(int newCalories) {
+        this.calories = newCalories;
     }
 
     public boolean isGoalMet() {

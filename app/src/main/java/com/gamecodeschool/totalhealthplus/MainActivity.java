@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         dateString = formatter.format(currentDate);
     }
 
-
-
     public void createUser(){
         setContentView(R.layout.create_user_page1);
         //Initialize username and password edit texts to be able to grab input
@@ -154,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         });
                     }
                 });
-
-
             }
         });
     }
@@ -188,9 +184,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
             currentUserCalorieGoalList = getGoalsForUser(usernameCheck);
+
             goalAdapter = new GoalAdapter(currentUserCalorieGoalList, this);
-
-
 
             //Go to home page
             setContentView(R.layout.activity_main);
@@ -455,7 +450,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public List<CalorieGoal> getGoalsForUser(String username){
 
         List<CalorieGoal> resultList = new ArrayList<>();
-        String getGoalsQuery = "SELECT Date, Goal, GoalMet, GoalCategory FROM prev_goals_met WHERE Username = " + username;
+        String getGoalsQuery = "SELECT Date, Goal, GoalMet FROM prev_goals_met WHERE Username = " + username;
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
@@ -466,11 +461,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 {
 
                     String dateStr = cursor.getString(cursor.getColumnIndexOrThrow("Date"));
-                    @SuppressLint("Range") String description = cursor.getString(cursor.getColumnIndex("Goal"));
+                    @SuppressLint("Range") int calories = cursor.getInt(cursor.getColumnIndex("Goal"));
                     @SuppressLint("Range") int goalMet = cursor.getInt(cursor.getColumnIndex("GoalMet"));
-                    @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex("GoalCategory"));
 
-                    resultList.add(new CalorieGoal(dateStr, description, category, goalMet == 1)); // Assuming 1 represents true for goal met
+                    resultList.add(new CalorieGoal(dateStr, calories, goalMet == 1)); // Assuming 1 represents true for goal met
                 } while (cursor.moveToNext());
             }
         }
