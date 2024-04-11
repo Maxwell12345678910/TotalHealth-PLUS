@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainDashboard extends Fragment implements MainActivity.ProgressUpdateListener {
+public class MainDashboard extends Fragment  {
 
 
     int setCalGoal = 2000;
@@ -24,6 +24,8 @@ public class MainDashboard extends Fragment implements MainActivity.ProgressUpda
     int totalProgress = 0; // Track the total progress separately
     ProgressBar progressBar;
     Button setGoalButton;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +90,7 @@ public class MainDashboard extends Fragment implements MainActivity.ProgressUpda
 
 
 
-    @Override
-    public void onProgressUpdate(int increment) {
-        updateProgressBar(increment); // Call the method to update the progress bar
-    }
+
 
 
     private void showInputDialog() {
