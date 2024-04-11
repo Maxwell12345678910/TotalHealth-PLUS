@@ -42,7 +42,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
 
+    //used to update the progress bar in MainDashboard
+    public interface ProgressUpdateListener {
+        void onProgressUpdate(int increment);
+    }
+    private ProgressUpdateListener progressUpdateListener;
 
+    public void setProgressUpdateListener(ProgressUpdateListener listener) {
+        this.progressUpdateListener = listener;
+    }
     public static DatabaseHelper databaseHelper;
 
     private TableLayout browseFoodsTable;
@@ -77,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.login_page);
 
         databaseHelper = new DatabaseHelper(this);
-
         initializeLogin();
 
         // Get the current date
@@ -90,16 +97,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         dateString = formatter.format(currentDate);
 
 
-         databaseHelper.insertFood("Grilled Chicken Breast", "Protein", 231, 100);
-         databaseHelper.insertFood("Steamed Broccoli", "Vegetable", 55, 150);
-         databaseHelper.insertFood("Brown Rice", "Grain", 112, 150);
-         databaseHelper.insertFood("Fresh Spinach Salad", "Vegetable", 23, 50);
-         databaseHelper.insertFood("Salmon Fillet", "Protein", 280, 120);
-         databaseHelper.insertFood("Quinoa", "Grain", 222, 100);
-         databaseHelper.insertFood("Avocado", "Fruit", 160, 200);
-         databaseHelper.insertFood("Greek Yogurt", "Dairy", 100, 150);
-         databaseHelper.insertFood("Mixed Nuts", "Snack", 173, 28);
-         databaseHelper.insertFood("Banana", "Fruit", 105, 120);
+
+        //weight per serving is in grams
+//         databaseHelper.insertFood("Grilled Chicken Breast", "Protein", 231, 100);
+//         databaseHelper.insertFood("Steamed Broccoli", "Vegetable", 55, 150);
+//         databaseHelper.insertFood("Brown Rice", "Grain", 112, 150);
+//         databaseHelper.insertFood("Fresh Spinach Salad", "Vegetable", 23, 50);
+//         databaseHelper.insertFood("Salmon Fillet", "Protein", 280, 120);
+//         databaseHelper.insertFood("Quinoa", "Grain", 222, 100);
+//         databaseHelper.insertFood("Avocado", "Fruit", 160, 200);
+//         databaseHelper.insertFood("Greek Yogurt", "Dairy", 100, 150);
+//         databaseHelper.insertFood("Mixed Nuts", "Snack", 173, 28);
+//         databaseHelper.insertFood("Banana", "Fruit", 105, 120);
 
     }
 
@@ -560,9 +569,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString();
         int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString());
+        int calculatedCals = databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal);
 
-        databaseHelper.insertFoodIntake(currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
+        databaseHelper.insertFoodIntake
+                (currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, calculatedCals);
+
         Toast.makeText(this, "Intake inserted successfully.", Toast.LENGTH_SHORT).show();
+
+
+        ///NOTWORKING 000000000000000000000000000  STUFF FOR UPDATING PROGRESS BAR-----------------------------------------------------------------------
+        MainDashboard mainDashboard = (MainDashboard) getSupportFragmentManager().findFragmentById(R.id.MainDashboard);
+        if (mainDashboard != null) {
+            setProgressUpdateListener(mainDashboard);
+        } else {
+            Log.e("MainActivity", "MainDashboard fragment not found");
+        }
+
+        if (progressUpdateListener != null) {
+            progressUpdateListener.onProgressUpdate(calculatedCals); // Pass the consumed calories
+        }
+
     }
 
 }
