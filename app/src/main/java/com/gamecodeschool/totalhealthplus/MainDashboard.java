@@ -38,7 +38,8 @@ public class MainDashboard extends Fragment {
         progressBar = view.findViewById(R.id.progBar);
         curCalsDisp = view.findViewById(R.id.curCalDisp); //left text
         goalCalsDisp = view.findViewById(R.id.calGoalDisp); // right text
-        updateProgressBar(0);progressBar.setMax(setCalGoal);//init default vals
+        updateProgressBar(0);
+        progressBar.setMax(setCalGoal);//init default vals
         goalCalsDisp.setText(String.valueOf(setCalGoal));
 
 
