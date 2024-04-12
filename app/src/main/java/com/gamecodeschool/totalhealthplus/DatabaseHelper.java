@@ -378,7 +378,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int calsFoods = 0;
         calculateCalsFoods = "SELECT SUM(TotalCalsIn) FROM daily_intake " +
                 "WHERE Username = " + "'" + username + "'"
-                + " AND Date = " + "'" + date + "' ";
+                + " AND Date = " + "'" + date + "';";
 
        SQLiteDatabase db = this.getReadableDatabase();
 
@@ -400,7 +400,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int calsExercise = 0;
         calculateCalsExercises = "SELECT SUM(TotalCalsBurned) FROM daily_activities " +
                 "WHERE Username = " + "'" + username + "'"
-                + " AND Date = " + "'" + date + "' ";
+                + " AND Date = " + "'" + date + "';";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
