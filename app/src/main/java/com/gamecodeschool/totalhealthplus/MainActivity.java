@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.util.SparseArray;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -353,8 +352,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public void seeFoodAdd(View v){
-        setContentView(R.layout.food_add);
+    public void seeFoodBrowse(View v){
+        setContentView(R.layout.food_browse);
     }
     public void seeFoodLibraryAdd(View v){
         setContentView(R.layout.food_add_library);
@@ -457,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(R.layout.add_completed_exercise);
 
-        populateSpinnersExercise(); //we still need to make this
+        populateSpinnersExercise();
 
     }
 
@@ -511,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
     @SuppressLint("MissingInflatedId")
-    public void PreGoals(View v){
+    public void seePreGoals(View v){
         setContentView(R.layout.fragment_past_goals);
 
         goalRecyclerView = findViewById(R.id.goalRecyclerView);

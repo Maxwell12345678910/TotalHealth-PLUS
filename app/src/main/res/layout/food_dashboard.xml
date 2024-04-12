@@ -10,64 +10,56 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="66dp"
         android:width="256dp"
         android:onClick="seeAddFoodIntake"
-        android:text="Today's Food"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:text="Add a meal or snack for the day"
+        tools:layout_editor_absoluteX="78dp"
+        tools:layout_editor_absoluteY="275dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="62dp"
         android:width="256dp"
-        android:onClick="seeFoodAdd"
+        android:onClick="seeFoodBrowse"
         android:text="Browse Food Library"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        tools:layout_editor_absoluteX="78dp"
+        tools:layout_editor_absoluteY="423dp" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="184dp"
         android:width="256dp"
-        android:onClick="PreGoals"
+        android:onClick="seePreGoals"
         android:text="Previous Nutrition Record"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        tools:layout_editor_absoluteX="78dp"
+        tools:layout_editor_absoluteY="499dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="235dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="91dp"
+        android:layout_height="70dp"
         android:gravity="center"
         android:text="Nutrition Dashboard"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        tools:layout_editor_absoluteX="88dp"
+        tools:layout_editor_absoluteY="114dp" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="113dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/food_logo_2" />
+        android:layout_height="70dp"
+        app:srcCompat="@drawable/food_logo_2"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="32dp" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="160dp"
+        tools:layout_editor_absoluteY="341dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
