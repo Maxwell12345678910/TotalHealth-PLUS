@@ -394,7 +394,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        return calsFoods;
     }
 
-
     @SuppressLint("Range")
     public int calculateExerciseCalsDay(String username, String date){
         int calsExercise = 0;

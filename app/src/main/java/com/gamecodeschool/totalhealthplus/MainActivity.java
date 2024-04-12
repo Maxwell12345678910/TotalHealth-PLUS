@@ -361,7 +361,29 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void seeFoodAdd(View v){
         setContentView(R.layout.food_add);
     }
+    public void seeFoodLibraryAdd(View v){
+        setContentView(R.layout.food_add_library);
+    }
 
+    public void submitFoodLibraryAdd(View v){
+
+        EditText foodName = findViewById(R.id.foodLibraryName);
+        EditText foodCals = findViewById(R.id.foodLibraryCals);
+        EditText foodCategory = findViewById(R.id.foodLibraryCategory);
+        EditText foodWeight = findViewById(R.id.foodLibraryWeight);
+
+        try
+        {
+            databaseHelper.insertFood(foodName.getText().toString(), foodCategory.getText().toString(),
+                    Integer.parseInt(foodCals.getText().toString()), Float.parseFloat(foodWeight.getText().toString()));
+            Toast.makeText(this, "Food insertion successful", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Please enter valid values for fields", Toast.LENGTH_SHORT).show();
+        }
+
+    }
     public void seeFitnessAdd(View v){
         setContentView(R.layout.add_completed_exercise);
 
@@ -401,6 +423,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
     }
+
+    public void seeFitnessLibraryAdd(View v){
+        setContentView(R.layout.fitness_add_library);
+
+    }
+
+    public void submitFitnessLibraryAdd(View v){
+
+        EditText fitnessName = findViewById(R.id.fitnessLibraryName);
+        EditText fitnessCals = findViewById(R.id.fitnessLibraryCals);
+
+        try
+        {
+            databaseHelper.insertExercise(fitnessName.getText().toString(), Float.parseFloat(fitnessCals.getText().toString()));
+            Toast.makeText(this, "Exercise insertion successful", Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            Toast.makeText(this, "Please enter valid values for fields", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 
     public void seeAddFoodIntake(View v){
 
