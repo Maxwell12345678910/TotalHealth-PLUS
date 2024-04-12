@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 
 public class MainDashboard extends Fragment {
-
+    int setCalGoal = 2000;
     TextView curCalsDisp;
     TextView goalCalsDisp;
     int totalProgress = 0; // Track the total progress separately
@@ -38,7 +38,8 @@ public class MainDashboard extends Fragment {
         progressBar = view.findViewById(R.id.progBar);
         curCalsDisp = view.findViewById(R.id.curCalDisp); //left text
         goalCalsDisp = view.findViewById(R.id.calGoalDisp); // right text
-        updateProgressBar(0);progressBar.setMax(2000);//init default vals
+        updateProgressBar(0);progressBar.setMax(setCalGoal);//init default vals
+        goalCalsDisp.setText(String.valueOf(setCalGoal));
 
 
         //set up the button goalSetButton
@@ -71,7 +72,6 @@ public class MainDashboard extends Fragment {
     //dont forget to also update the display for the new cur cals
     public void updateProgressBar(int increment) {
 
-        int prevVal = Integer.parseInt(curCalsDisp.getText().toString());
         totalProgress += increment; // Accumulate the progress
         progressBar.setProgress(totalProgress);
         curCalsDisp.setText(String.valueOf(totalProgress));
@@ -101,11 +101,12 @@ public class MainDashboard extends Fragment {
         builder.setPositiveButton("OK", (dialog, which) -> {
             String userInput = input.getText().toString().trim();
             if (isValidInput(userInput)) {
+                setCalGoal = Integer.parseInt(userInput);
                 progressBar.setMax(Integer.parseInt(userInput));
                 goalCalsDisp.setText(userInput);
             } else {
                 // if the user inputs a non-number then display error
-                 Toast.makeText(getActivity(), "Invalid input. Please enter a positive number.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Invalid input. Please enter a positive number.", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.util.SparseArray;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -37,6 +38,10 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
+
+    private int totalProgress = 0;
+    private ProgressBar progressBar;
+    private TextView curCalsDisp;
 
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
@@ -54,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static GoalAdapter goalAdapter;
     private RecyclerView goalRecyclerView;
     String dateString;
-
-    String result = "";
-
     public static String FoodKeyword; // this is the keyword they type in for search
     public static String FitnessKeyword;
     private EditText SearchKeyword;
@@ -181,9 +183,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (loginSuccess){
             currentUsername = usernameCheck;
-
-            //Food intake sample
-            //databaseHelper.insertFood("apple", "fruit", 50, 50.4f);
 
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
