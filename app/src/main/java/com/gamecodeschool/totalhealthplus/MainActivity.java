@@ -39,10 +39,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
 
-    private int totalProgress = 0;
-    private ProgressBar progressBar;
-    private TextView curCalsDisp;
-
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
