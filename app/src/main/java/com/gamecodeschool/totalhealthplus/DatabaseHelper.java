@@ -35,11 +35,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String prevGoalsMetTableName;
     public String createPrevGoalsMetTableQuery;
 
+    //Calculate all current calorie counts for User
+    public String calculateCalsFoods;
+    public String calculateCalsExercises;
+
 
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
-        super(context, "totalhealthplus.DB", null, 4);
+        super(context, "totalhealthplus.DB", null, 5);
 
         db_name = "totalhealthplus.DB";
         db_version = 2;
@@ -75,11 +79,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         activityTableName = "daily_activities";
         createActivityTableQuery =
                 "CREATE TABLE " + activityTableName + "(ActivityID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "Username VARCHAR(50), " +
                         "DateActive date, " +
                         "ExerciseDescription VARCHAR(50), " +
                         "DurationInMin FLOAT, " +
                         "TotalCalsBurned FLOAT, " +
-                        "FOREIGN KEY (ExerciseDescription) REFERENCES exercise_selections(ExerciseDescription));";
+                        "FOREIGN KEY (ExerciseDescription) REFERENCES exercise_selections(ExerciseDescription)" +
+                        "FOREIGN KEY (Username) REFERENCES users(Username));";
 
         intakeTableName = "daily_intake";
         createIntakeTableQuery =
@@ -100,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         "Goal INT, " +
                         "GoalMet INT, " +
                         "FOREIGN KEY (Username) REFERENCES users(Username));";
+
     }
 
     @Override
@@ -367,6 +374,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
+    public int calculateFoodCalsDay(String username, String date){
+        int calsFoods = 0;
+        calculateCalsFoods = "SELECT SUM(TotalCalsIn) FROM daily_intake " +
+                "WHERE Username = " + "'" + username + "'"
+                + " AND Date = " + "'" + date + "' ";
+
+       SQLiteDatabase db = this.getReadableDatabase();
+
+       Cursor cursor = db.rawQuery(calculateCalsFoods, null);
+
+       if (cursor.moveToFirst()){
+           calsFoods = cursor.getInt(cursor.getColumnIndex("TotalCalsIn"));
+       }
+
+       cursor.close();
+       db.close();
+
+       return calsFoods;
+    }
+
+
+    @SuppressLint("Range")
+    public int calculateExerciseCalsDay(String username, String date){
+        int calsExercise = 0;
+        calculateCalsExercises = "SELECT SUM(TotalCalsBurned) FROM daily_activities " +
+                "WHERE Username = " + "'" + username + "'"
+                + " AND Date = " + "'" + date + "' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(calculateCalsExercises, null);
+
+        if (cursor.moveToFirst()){
+            calsExercise = cursor.getInt(cursor.getColumnIndex("TotalCalsBurned"));
+        }
+
+        cursor.close();
+        db.close();
+
+        return calsExercise;
+    }
+
+
+
+    @SuppressLint("Range")
     public float calculateActivityBurned(String exerciseSpinnerVal, int minSpinnerVal) {
 
         int result = 0;
@@ -388,4 +440,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result;
     }
+
+
 }

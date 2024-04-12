@@ -181,6 +181,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (loginSuccess){
             currentUsername = usernameCheck;
+
+            //Food intake sample
+            //databaseHelper.insertFood("apple", "fruit", 50, 50.4f);
+
             Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
 
             currentUserCalorieGoalList = getGoalsForUser(usernameCheck);
@@ -314,27 +318,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         cursor.close();
     }
 
-    //end of search Food methods
-
-    // start of find fitness
-
-//    public void StartSearchFit(View v) {
-//
-//        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
-//        String word = SearchKeyword.getText().toString();
-//
-//        FindFitness = findViewById(R.id.FindFitness2);
-//
-//        if (FindFitness.getChildCount() > 1){
-//
-//            for (int i = FindFitness.getChildCount() - 1; i > 0; i--){
-//                FindFitness.removeViewAt(i);
-//            }
-//
-//        }
-//
-//        findExercises(word);
-//    }
 
     public void findExercises(String keyword){
 
