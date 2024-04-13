@@ -156,15 +156,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment selectedFragment = fragmentMap.get(item.getItemId());
-        if (selectedFragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.flFragment, selectedFragment)
-                    .commit();
+        if (item.getItemId() == R.id.FoodDashboard) {
+            seeFoodDash(null); // Replace null with appropriate View instance if needed
             return true;
+        } else if (item.getItemId() == R.id.MainDashboard) {
+            seeMainDash(null); // Replace null with appropriate View instance if needed
+            return true;
+        } else if (item.getItemId() == R.id.FitnessDashboard) {
+            seeFitnessDash(null); // Replace null with appropriate View instance if needed
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     public void checkLogin(){
