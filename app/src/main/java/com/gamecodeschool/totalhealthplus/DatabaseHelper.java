@@ -262,8 +262,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor selectExercise() {
 
         SQLiteDatabase testDb = getReadableDatabase();
-        String select = "SELECT exercise_selections.* FROM exercise_selections";
-        String result = "";
+        String select = "SELECT * FROM exercise_selections";
 
         return testDb.rawQuery(select, null);
     }
@@ -301,6 +300,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Returns number of rows deleted
         return database.delete("daily_activities", "DateActive=? AND ExerciseDescription=?",
                 new String[]{date, exerciseDescription});
+    }
+
+    public Cursor selectIntakes(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String selectIntakeQuery = "SELECT * FROM daily_intake";
+
+        return database.rawQuery(selectIntakeQuery, null);
     }
 
     public long insertFoodIntake(String username, String date, String foodDescription, int servings, int totalCalsIn){
@@ -376,7 +382,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public int calculateFoodCalsDay(String username, String date){
         int calsFoods = 0;
-        calculateCalsFoods = "SELECT SUM(TotalCalsIn) FROM daily_intake " +
+        calculateCalsFoods = "SELECT SUM(TotalCalsIn) AS TotalCalsIn FROM daily_intake " +
                 "WHERE Username = " + "'" + username + "'"
                 + " AND Date = " + "'" + date + "';";
 
@@ -397,9 +403,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public int calculateExerciseCalsDay(String username, String date){
         int calsExercise = 0;
-        calculateCalsExercises = "SELECT SUM(TotalCalsBurned) FROM daily_activities " +
+        calculateCalsExercises = "SELECT SUM(TotalCalsBurned) AS TotalCalsBurned FROM daily_activities " +
                 "WHERE Username = " + "'" + username + "'"
-                + " AND Date = " + "'" + date + "';";
+                + " AND DateActive = " + "'" + date + "';";
 
         SQLiteDatabase db = this.getReadableDatabase();
 

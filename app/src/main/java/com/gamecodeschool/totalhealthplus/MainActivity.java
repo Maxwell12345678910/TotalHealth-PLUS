@@ -53,17 +53,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public static GoalAdapter goalAdapter;
     private RecyclerView goalRecyclerView;
-    String dateString;
+    public static String dateString;
     public static String FoodKeyword; // this is the keyword they type in for search
     public static String FitnessKeyword;
     private EditText SearchKeyword;
-    private TableLayout FindMyFood;
+    private TableLayout findMyFood;
     private TableLayout FindFitness;
+    private TableLayout intakeTable;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
     private ArrayList<String> foodSpinnerList;
     private ArrayList<String> exerciseSpinnerList;
-    private String currentUsername;
+    public static String currentUsername;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -242,26 +243,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //search foods methods
 
-    public void StartSearch(View v) {
+    public void startSearch(View v) {
 
         SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
         String word = SearchKeyword.getText().toString();
 
-        FindMyFood = findViewById(R.id.FindFoods2);
+        findMyFood = findViewById(R.id.FindFoods2);
 
-        if (FindMyFood.getChildCount() > 1){
+        if (findMyFood.getChildCount() > 1){
 
-            for (int i = FindMyFood.getChildCount() - 1; i > 0; i--){
-                FindMyFood.removeViewAt(i);
+            for (int i = findMyFood.getChildCount() - 1; i > 0; i--){
+                findMyFood.removeViewAt(i);
             }
 
         }
 
-        FindFoods(word);
+        fillFoodsTable(word);
         //Log.d(TAG, "Text sent: " + FoodKeyword);
     }
 
-    public void FindFoods(String keyword){
+    public void fillFoodsTable(String keyword){
 
         Cursor cursor = databaseHelper.selectFoods();
 
@@ -305,9 +306,68 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 newRow.addView(calsView);
                 newRow.addView(weightView);
 
-                FindMyFood.addView(newRow);
+                findMyFood.addView(newRow);
 
             }
+        }
+        cursor.close();
+    }
+
+    public void fillIntakeTable(){
+
+        intakeTable = (TableLayout) findViewById(R.id.intakeTable);
+
+        if (intakeTable.getChildCount() > 0){
+
+            for (int i = intakeTable.getChildCount() - 1; i > 0; i--){
+                intakeTable.removeViewAt(i);
+            }
+
+        }
+
+        Cursor cursor = databaseHelper.selectIntakes();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int intakeID = cursor.getInt(cursor.getColumnIndex("IntakeID"));
+            @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex("Username"));
+            @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex("Date"));
+            @SuppressLint("Range") String foodDescription = cursor.getString(cursor.getColumnIndex("FoodDescription"));
+            @SuppressLint("Range") int servings = cursor.getInt(cursor.getColumnIndex("Servings"));
+            @SuppressLint("Range") int calories = cursor.getInt(cursor.getColumnIndex("TotalCalsIn"));
+
+
+            TableRow newRow = new TableRow(this);
+            newRow.setWeightSum(1);
+
+            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                    0, // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                    0.25f // Weight
+            );
+
+            TextView dateView = new TextView(this);
+            dateView.setText(date);
+            dateView.setLayoutParams(textViewParams);
+
+            TextView descView = new TextView(this);
+            descView.setText(foodDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this);
+            calsView.setText("" + calories);
+            calsView.setLayoutParams(textViewParams);
+
+            TextView servView = new TextView(this);
+            servView.setText("" + servings);
+            servView.setLayoutParams(textViewParams);
+
+            newRow.addView(dateView);
+            newRow.addView(descView);
+            newRow.addView(calsView);
+            newRow.addView(servView);
+
+            intakeTable.addView(newRow);
         }
         cursor.close();
     }
@@ -406,6 +466,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 .replace(R.id.flFragment, new FoodDashboard())
                 .commit();
 
+    }
+
+    public void seePrevIntake(View v){
+        setContentView(R.layout.food_past);
+
+        fillIntakeTable();
     }
 
     public void seeFitnessDash(View v){

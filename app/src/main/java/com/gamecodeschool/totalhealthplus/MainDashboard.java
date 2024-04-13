@@ -1,5 +1,9 @@
 package com.gamecodeschool.totalhealthplus;
 
+import static com.gamecodeschool.totalhealthplus.MainActivity.currentUsername;
+import static com.gamecodeschool.totalhealthplus.MainActivity.databaseHelper;
+import static com.gamecodeschool.totalhealthplus.MainActivity.dateString;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
@@ -64,6 +68,10 @@ public class MainDashboard extends Fragment {
         );
 
 
+        int calorieCount = 0;
+        calorieCount = databaseHelper.calculateFoodCalsDay(currentUsername, dateString);
+        calorieCount -= databaseHelper.calculateExerciseCalsDay(currentUsername, dateString);
+        updateProgressBar(calorieCount);
 
         return view;
 
@@ -71,11 +79,12 @@ public class MainDashboard extends Fragment {
 
 
     //dont forget to also update the display for the new cur cals
-    public void updateProgressBar(int increment) {
+    public void updateProgressBar(int cals) {
 
-        totalProgress += increment; // Accumulate the progress
+        totalProgress = cals;
         progressBar.setProgress(totalProgress);
         curCalsDisp.setText(String.valueOf(totalProgress));
+
     }
 
 

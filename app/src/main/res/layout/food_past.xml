@@ -6,82 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".FoodAddSearch">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="32dp"
-        android:onClick="seeFoodLibraryAdd"
-        android:text="Add a food"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginBottom="12dp"
         android:background="#000000"
         android:onClick="seeFoodDash"
         android:text="Back to Dashboard"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/FindFoodSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:ems="10"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
-
-    <Button
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="14dp"
-        android:minHeight="48dp"
-        android:onClick="startSearch"
-        android:text="Search"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="49dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FindFoodSubmit">
+        app:layout_constraintTop_toBottomOf="@+id/button4">
 
         <TableLayout
-            android:id="@+id/FindFoods2"
+            android:id="@+id/intakeTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="1">
+                android:weightSum="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.172">
 
                 <TextView
-                    android:id="@+id/FF1"
+                    android:id="@+id/dateFood"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.25"
+                    android:text="Date Consumed"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/decriptionFood"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
@@ -89,27 +62,19 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/FF2"
+                    android:id="@+id/caloriesFood"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Category"
+                    android:text="Calories In"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/FF3"
+                    android:id="@+id/servingsFood"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
-                    android:text="Calories Per Serving"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/FF4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
-                    android:text="Weight In Grams"
+                    android:text="Servings"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
