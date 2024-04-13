@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:width="256dp"
         android:onClick="seePreGoals"
-        android:text="Previous CalorieGoal Records"
+        android:text="Previous Calorie Goal Records"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

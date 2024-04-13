@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainDashboard extends Fragment {
+public class MainDashboard extends Fragment implements Runnable {
     int setCalGoal = 2000;
     TextView curCalsDisp;
     TextView goalCalsDisp;
@@ -138,4 +138,11 @@ public class MainDashboard extends Fragment {
         }
     }
 
+    @Override
+    public void run() {
+        int calorieCount = 0;
+        calorieCount = databaseHelper.calculateFoodCalsDay(currentUsername, dateString);
+        calorieCount -= databaseHelper.calculateExerciseCalsDay(currentUsername, dateString);
+        updateProgressBar(calorieCount);
+    }
 }

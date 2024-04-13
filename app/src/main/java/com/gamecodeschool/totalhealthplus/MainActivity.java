@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -519,7 +520,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new FoodDashboard())
                 .commit();
@@ -599,6 +599,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
+
+        bottomNavigationView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Menu menu = bottomNavigationView.getMenu();
+                MenuItem menuItem = menu.getItem(2); // Index starts from 0
+                menuItem.setChecked(true);
+            }
+        }, 0);
     }
 
     public void seeFitnessLibraryAdd(View v){
