@@ -58,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static String FitnessKeyword;
     private EditText SearchKeyword;
     private TableLayout findMyFood;
+    private TableLayout findMyFitness;
     private TableLayout FindFitness;
     private TableLayout intakeTable;
+    private TableLayout activityTable;
     private BottomNavigationView bottomNavigationView;
     private SparseArray<Fragment> fragmentMap = new SparseArray<>();
     private ArrayList<String> foodSpinnerList;
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.login_page);
 
         databaseHelper = new DatabaseHelper(this);
-
         initializeLogin();
 
         // Get the current date
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //search foods methods
 
-    public void startSearch(View v) {
+    public void startFoodSearch(View v) {
 
         SearchKeyword = (EditText) findViewById(R.id.FindFoodSubmit);
         String word = SearchKeyword.getText().toString();
@@ -260,6 +261,63 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         fillFoodsTable(word);
         //Log.d(TAG, "Text sent: " + FoodKeyword);
+    }
+
+    public void startExerciseSearch(View v) {
+
+        SearchKeyword = (EditText) findViewById(R.id.findFitnessSubmit);
+        String word = SearchKeyword.getText().toString();
+
+        findMyFitness = findViewById(R.id.FindFitness2);
+
+        if (findMyFitness.getChildCount() > 1){
+
+            for (int i = findMyFitness.getChildCount() - 1; i > 0; i--){
+                findMyFitness.removeViewAt(i);
+            }
+
+        }
+
+        fillExercisesTable(word);
+        //Log.d(TAG, "Text sent: " + FoodKeyword);
+    }
+
+    public void fillExercisesTable(String keyword){
+        Cursor cursor = databaseHelper.selectExercises();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int exerciseID = cursor.getInt(cursor.getColumnIndex("ExerciseID"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") float calsBurnedPerMin = cursor.getInt(cursor.getColumnIndex("CalsBurnedPerMin"));
+
+            if (containsCharacters(exerciseDescription, keyword) || keyword.equals("")) {
+
+                TableRow newRow = new TableRow(this);
+                newRow.setWeightSum(1);
+
+                TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                        0, // Width
+                        ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                        0.5f // Weight
+                );
+
+                TextView descView = new TextView(this);
+                descView.setText(exerciseDescription);
+                descView.setLayoutParams(textViewParams);
+
+                TextView calsView = new TextView(this);
+                calsView.setText("" + calsBurnedPerMin);
+                calsView.setLayoutParams(textViewParams);
+
+                newRow.addView(descView);
+                newRow.addView(calsView);
+
+                findMyFitness.addView(newRow);
+
+            }
+        }
+        cursor.close();
     }
 
     public void fillFoodsTable(String keyword){
@@ -375,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void findExercises(String keyword){
 
-        Cursor cursor = databaseHelper.selectExercise();
+        Cursor cursor = databaseHelper.selectExercises();
 
         while (cursor.moveToNext()) {
 
@@ -438,7 +496,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
     }
-    public void seeFitnessAdd(View v){
+    public void seeAddFitness(View v){
         setContentView(R.layout.add_completed_exercise);
 
         populateSpinnersExercise();
@@ -474,6 +532,65 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         fillIntakeTable();
     }
 
+    public void seePrevActivity(View v){
+        setContentView(R.layout.fitness_past);
+
+        fillActivityTable();
+    }
+
+    public void fillActivityTable(){
+        activityTable = (TableLayout) findViewById(R.id.activityTable);
+
+        if (activityTable.getChildCount() > 0){
+
+            for (int i = activityTable.getChildCount() - 1; i > 0; i--){
+                activityTable.removeViewAt(i);
+            }
+
+        }
+
+        Cursor cursor = databaseHelper.selectActivities();
+
+        while (cursor.moveToNext()){
+
+            @SuppressLint("Range") int activityID = cursor.getInt(cursor.getColumnIndex("ActivityID"));
+            @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex("Username"));
+            @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex("DateActive"));
+            @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
+            @SuppressLint("Range") int duration = cursor.getInt(cursor.getColumnIndex("DurationInMin"));
+            @SuppressLint("Range") int calsBurned = cursor.getInt(cursor.getColumnIndex("TotalCalsBurned"));
+
+
+            TableRow newRow = new TableRow(this);
+            newRow.setWeightSum(1);
+
+            TableRow.LayoutParams textViewParams = new TableRow.LayoutParams(
+                    0, // Width
+                    ViewGroup.LayoutParams.WRAP_CONTENT, // Height
+                    0.33f // Weight
+            );
+
+            TextView dateView = new TextView(this);
+            dateView.setText(date);
+            dateView.setLayoutParams(textViewParams);
+
+            TextView descView = new TextView(this);
+            descView.setText(exerciseDescription);
+            descView.setLayoutParams(textViewParams);
+
+            TextView calsView = new TextView(this);
+            calsView.setText("" + calsBurned);
+            calsView.setLayoutParams(textViewParams);
+
+            newRow.addView(dateView);
+            newRow.addView(descView);
+            newRow.addView(calsView);
+
+            activityTable.addView(newRow);
+        }
+        cursor.close();
+    }
+
     public void seeFitnessDash(View v){
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -506,8 +623,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
-
-
     public void seeAddFoodIntake(View v){
 
         setContentView(R.layout.add_today_intake);
@@ -515,17 +630,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         populateSpinnersFood();
 
     }
-
-
-    //still need to set this up for fitness see comment inside
-    public void seeAddCompletedExercise(View v){
-
-        setContentView(R.layout.add_completed_exercise);
-
-        populateSpinnersExercise();
-
-    }
-
 
     @Override
     public void onItemClick(CalorieGoal calorieGoal) {
@@ -652,7 +756,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void populateExerciseSpinnerList(){
 
-        Cursor cursor = databaseHelper.selectExercise();
+        Cursor cursor = databaseHelper.selectExercises();
 
         while (cursor.moveToNext()){
 
@@ -660,7 +764,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @SuppressLint("Range") String exerciseDescription = cursor.getString(cursor.getColumnIndex("ExerciseDescription"));
             @SuppressLint("Range") float calsPerMin = cursor.getFloat(cursor.getColumnIndex("CalsBurnedPerMin"));
 
-            exerciseSpinnerList.add(exerciseDescription + " - Calories Burned Per Min: " + calsPerMin);
+            exerciseSpinnerList.add(exerciseDescription);
         }
     }
 

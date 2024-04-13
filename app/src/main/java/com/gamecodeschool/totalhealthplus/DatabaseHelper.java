@@ -259,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return insertingResult;
     }
 
-    public Cursor selectExercise() {
+    public Cursor selectExercises() {
 
         SQLiteDatabase testDb = getReadableDatabase();
         String select = "SELECT * FROM exercise_selections";
@@ -308,6 +308,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return database.rawQuery(selectIntakeQuery, null);
     }
+    public Cursor selectActivities(){
+        SQLiteDatabase database = this.getReadableDatabase();
+        String selectIntakeQuery = "SELECT * FROM daily_activities";
+
+        return database.rawQuery(selectIntakeQuery, null);
+    }
+
 
     public long insertFoodIntake(String username, String date, String foodDescription, int servings, int totalCalsIn){
         SQLiteDatabase database = this.getWritableDatabase();

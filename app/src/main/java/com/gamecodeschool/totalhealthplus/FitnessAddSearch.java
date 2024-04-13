@@ -1,6 +1,5 @@
 package com.gamecodeschool.totalhealthplus;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.gamecodeschool.totalhealthplus.MainActivity.databaseHelper;
 
 import android.annotation.SuppressLint;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +64,7 @@ public class FitnessAddSearch extends Fragment {
     }
 
     public void FindFitness() {
-        Cursor cursor = databaseHelper.selectExercise();
+        Cursor cursor = databaseHelper.selectExercises();
 
         while (cursor.moveToNext()){
 
@@ -118,7 +114,7 @@ public class FitnessAddSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fitness_add, container, false);
+        View rootView = inflater.inflate(R.layout.fitness_browse, container, false);
 
 //        FindMyFitness = (TableLayout) rootView.findViewById(R.id.FindFitness2);
         //FindFoods();
