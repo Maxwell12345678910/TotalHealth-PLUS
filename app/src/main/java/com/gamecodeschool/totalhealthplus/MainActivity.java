@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
+
+    Spinner servingsSpinner;
 
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Format the current date as a string
         dateString = formatter.format(currentDate);
+
+
     }
 
     public void createUser(){
@@ -482,6 +487,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new FitnessDashboard())
                 .commit();
+
+        // Programmatically select the third item in the BottomNavigationView
+        bottomNavigationView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Menu menu = bottomNavigationView.getMenu();
+                MenuItem menuItem = menu.getItem(2); // Index starts from 0
+                menuItem.setChecked(true);
+            }
+        }, 0); // Delay in milliseconds, adjust as needed
     }
 
     public void seeFitnessLibraryAdd(View v){
@@ -511,6 +526,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void seeAddFoodIntake(View v){
 
         setContentView(R.layout.add_today_intake);
+
+
+        servingsSpinner = findViewById(R.id.servingsSpinner);
+        if(servingsSpinner == null)
+            Log.d("null Spinner","null spinner ===========================================");
+        populateServingsSpinner();
+
 
         populateSpinnersFood();
 
@@ -624,13 +646,41 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void submitFoodIntake(View view){
 
         Spinner foodSpinner = findViewById(R.id.foodSpinner);
-        Spinner servingsSpinner = findViewById(R.id.servingsSpinner);
+//        Spinner servingsSpinner = findViewById(R.id.servingsSpinner);
+
+       /* // Your Java array containing entries
+        String[] myEntries = {"Entry 1", "Entry 2", "Entry 3", "Entry 4", "Entry 5"};
+
+// Create an ArrayAdapter using the array
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, myEntries);
+
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// Apply the adapter to the spinner
+        servingsSpinner.setAdapter(adapter);*/
 
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString();
         int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString());
 
         databaseHelper.insertFoodIntake(currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
         Toast.makeText(this, "Intake inserted successfully.", Toast.LENGTH_SHORT).show();
+    }
+
+        public void populateServingsSpinner() {
+        if(servingsSpinner == null)
+            Log.d("was null","was null in method");
+
+        String[] myEntries = {"Entry 1", "Entry 2", "Entry 3", "Entry 4", "Entry 5"};
+
+        // Create an ArrayAdapter using the array
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, myEntries);
+//
+//        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        // Apply the adapter to the servingsSpinner
+        servingsSpinner.setAdapter(adapter);
     }
 
     public void populateSpinnersExercise(){
