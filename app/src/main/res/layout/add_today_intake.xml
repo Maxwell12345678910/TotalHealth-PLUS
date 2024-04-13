@@ -9,11 +9,11 @@
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="544dp"
         android:background="#000000"
-        android:onClick="seeFoodDash"
-        android:text="Back to Dashboard"
+        android:onClick="seeMainDash"
+        android:text="Back to Main Dashboard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,4 +69,5 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/foodSpinner"
         app:layout_constraintStart_toStartOf="@+id/foodSpinner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

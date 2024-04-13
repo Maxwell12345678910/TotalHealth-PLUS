@@ -513,6 +513,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flFragment, new MainDashboard())
                 .commit();
+
+        bottomNavigationView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Menu menu = bottomNavigationView.getMenu();
+                MenuItem menuItem = menu.getItem(1); // Index starts from 0
+                menuItem.setChecked(true);
+            }
+        }, 0);
     }
 
     public void seeFoodDash(View v){
