@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Create methods to perform functions such as update, insert, delete, using Cursor class
     //which will allow iteration through returned data. Return long type to check row num
     public DatabaseHelper(Context context) {
-        super(context, "totalhealthplus.DB", null, 5);
+        super(context, "totalhealthplus.DB", null, 7);
 
         db_name = "totalhealthplus.DB";
         db_version = 2;
