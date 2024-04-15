@@ -21,7 +21,7 @@ public class GoalDetailsDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         dialogView = inflater.inflate(R.layout.prev_goal_details, null);
-        goalsListView = dialogView.findViewById(R.id.goalsList);
+
 
 
         //Retrieve text views and set values

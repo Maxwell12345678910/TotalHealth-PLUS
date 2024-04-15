@@ -57,16 +57,6 @@ public class MainDashboard extends Fragment implements Runnable {
         });
 
 
-        Button testButton = view.findViewById(R.id.tempEat);
-        testButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        updateProgressBar2();
-                    }
-                }
-        );
-
 
         int calorieCount = 0;
         calorieCount = databaseHelper.calculateFoodCalsDay(currentUsername, dateString);

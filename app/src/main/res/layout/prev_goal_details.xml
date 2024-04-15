@@ -26,7 +26,7 @@
             <TableLayout
                 android:id="@+id/GoalDetails"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="9dp"
@@ -45,15 +45,8 @@
                         android:id="@+id/textView11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Goals:"
+                        android:text="Goal: "
                         android:textSize="20sp" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp">
 
                     <TextView
                         android:id="@+id/textView9"
@@ -61,17 +54,14 @@
                         android:layout_height="wrap_content"
                         android:text="TextView" />
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ListView
-                            android:id="@+id/goalsList"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </ScrollView>
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Calories" />
 
                 </TableRow>
+
             </TableLayout>
 
             <Button

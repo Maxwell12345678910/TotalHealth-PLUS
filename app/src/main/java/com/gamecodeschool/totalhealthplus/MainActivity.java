@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Format the current date as a string
         dateString = formatter.format(currentDate);
-
-
     }
 
     public void createUser(){
@@ -763,10 +761,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         Log.d("RESULT WAS:", resultS);
         String[] servingIncrements = {"1 Serving - " + "   " + databaseHelper.calculateGrams(1,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
-                , "2 Servings : " + "   " + databaseHelper.calculateGrams(2,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
-                , "3 Servings : " + "   " + databaseHelper.calculateGrams(3,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
-                , "4 Servings : " + "   " + databaseHelper.calculateGrams(4,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
-                , "5 Servings : " + "   " + databaseHelper.calculateGrams(5,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                , "2 Servings : " + "   " + databaseHelper.calculateGrams(2,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,2) + "   cals"
+                , "3 Servings : " + "   " + databaseHelper.calculateGrams(3,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,3) + "   cals"
+                , "4 Servings : " + "   " + databaseHelper.calculateGrams(4,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,4) + "   cals"
+                , "5 Servings : " + "   " + databaseHelper.calculateGrams(5,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,5) + "   cals"
                 };
 
         // Create an ArrayAdapter using the array
