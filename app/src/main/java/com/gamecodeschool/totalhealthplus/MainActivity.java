@@ -39,6 +39,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
 
+    Spinner servingsSpinner;//populating this dynamically now
+    Spinner exerciseSpinner; //populating this dynamically now
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
             lastNameInputEDT, ageInputEDT, weightInputEDT, heightInputEDT, usernameLoginInput, passwordLoginInput;
     private Button createUserButton1, createUserButton2, createUserButton3, loginButton, signUpButton;
@@ -648,7 +650,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void seeAddFoodIntake(View v){
 
-        setContentView(R.layout.add_today_intake);
+        setContentView(R.layout.food_add_today_intake);
 
         populateSpinnersFood();
 
@@ -730,6 +732,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Set the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        //call method to dynamically render text in drop down spinner with vals from DB
+        populateServingsSpinner();
+    }
+
+    public void populateServingsSpinner() {
+        servingsSpinner = findViewById(R.id.servingsSpinner);
+
+        if(servingsSpinner == null)
+            Log.d("was null","was null in method");
+
+        String[] myEntries = {"1 - ", "2 - ", "3 - ", "4 - ", "5 - "};
+
+        // Create an ArrayAdapter using the array
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, myEntries);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the servingsSpinner
+        servingsSpinner.setAdapter(adapter);
     }
 
     public void populateFoodSpinnerList(){
@@ -751,7 +774,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void submitFoodIntake(View view){
 
         Spinner foodSpinner = findViewById(R.id.foodSpinner);
-        Spinner servingsSpinner = findViewById(R.id.servingsSpinner);
+        servingsSpinner = findViewById(R.id.servingsSpinner);
 
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString();
         int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString());
@@ -771,10 +794,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Get reference to foods selection spinner
-        Spinner spinner = findViewById(R.id.exerciseSpinner);
+        exerciseSpinner = findViewById(R.id.exerciseSpinner);
 
         // Set the adapter to the spinner
-        spinner.setAdapter(adapter);
+        exerciseSpinner.setAdapter(adapter);
     }
 
     public void populateExerciseSpinnerList(){
