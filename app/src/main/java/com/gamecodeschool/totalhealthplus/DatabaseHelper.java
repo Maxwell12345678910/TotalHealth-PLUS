@@ -453,5 +453,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    @SuppressLint("Range")
+    public float calculateGrams(int numServings, String foodName) {
+        float grams = 0;
+
+        SQLiteDatabase database = getReadableDatabase();
+
+        // Query to fetch the weight of the food based on its name
+        String query = "SELECT WeightPerServingInGrams FROM " + foodTableName + " WHERE FoodDescription = ?";
+        Cursor cursor = database.rawQuery(query, new String[]{foodName});
+
+        // Check if cursor has data
+        if (cursor.moveToFirst()) {
+            // Extract weight per serving in grams from the cursor
+            grams = cursor.getFloat(cursor.getColumnIndex("WeightPerServingInGrams"));
+        }
+
+        // Close cursor and database
+        cursor.close();
+        database.close();
+
+        // Calculate total grams based on number of servings
+        grams *= numServings;
+
+        return grams;
+    }
+
 
 }
