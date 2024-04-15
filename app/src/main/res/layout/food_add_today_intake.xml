@@ -72,4 +72,15 @@
         app:layout_constraintBottom_toTopOf="@+id/foodSpinner"
         app:layout_constraintStart_toStartOf="@+id/foodSpinner" />
 
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="232dp"
+        android:onClick="seeFoodDash"
+        android:text="Back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

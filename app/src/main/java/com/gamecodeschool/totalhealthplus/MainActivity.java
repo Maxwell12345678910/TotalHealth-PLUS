@@ -40,7 +40,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
 
-    private Spinner foodSpinner;
+    private Spinner foodSpinner; //need this global for dynamic use of below vars
     Spinner servingsSpinner;//populating this dynamically now
     Spinner exerciseSpinner; //populating this dynamically now
     private EditText usernameInputEDT, passwordInputEDT, firstNameInputEDT,
@@ -252,9 +252,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             Log.e("initializeLogin", "One or more views are null");
         }
     }
-
-
-    //search foods methods
 
     public void startFoodSearch(View v) {
 
@@ -659,6 +656,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Set onClick listener on foodSpinner
         foodSpinner = findViewById(R.id.foodSpinner);
 
+        //this makes it so that data is set in the bottom spinner every time the user sets the data for the top spinner
         foodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -751,23 +749,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Set the adapter to the spinner
         spinner.setAdapter(adapter);
-
-        //call method to dynamically render text in drop down spinner with vals from DB
-//        populateServingsSpinner();
     }
 
     public void populateServingsSpinner() {
         servingsSpinner = findViewById(R.id.servingsSpinner);
-
-        float result = databaseHelper.calculateGrams(1,"Asparagus");
-        String resultS= "" + result;
-
-        Spinner foodSpinner = findViewById(R.id.foodSpinner);
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString(); //name of food user selected from TOP spinner
+
+        //get the number of grams per
+        float grams = databaseHelper.calculateGrams(1,foodSpinnerVal);
+        String resultS= "" + grams;
+
 
 
         Log.d("RESULT WAS:", resultS);
-        String[] servingIncrements = {"1", "2", "3", "4", "5",foodSpinnerVal};
+        String[] servingIncrements = {"1 Serving - " + "   " + databaseHelper.calculateGrams(1,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                , "2 Servings : " + "   " + databaseHelper.calculateGrams(2,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                , "3 Servings : " + "   " + databaseHelper.calculateGrams(3,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                , "4 Servings : " + "   " + databaseHelper.calculateGrams(4,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                , "5 Servings : " + "   " + databaseHelper.calculateGrams(5,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
+                };
 
         // Create an ArrayAdapter using the array
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servingIncrements);
@@ -793,24 +793,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             foodSpinnerList.add(foodDescription);
         }
-
-//        servingsSpinner = findViewById(R.id.servingsSpinner);
-//
-//        float result = databaseHelper.calculateGrams(1,"Asparagus");
-//        String resultS= "" + result;
-//
-//
-//        Log.d("RESULT WAS:", resultS);
-//        String[] servingIncrements = {"1", "2", "3", "4", "5"};
-//
-//        // Create an ArrayAdapter using the array
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, servingIncrements);
-//
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//        // Apply the adapter to the servingsSpinner
-//        servingsSpinner.setAdapter(adapter);
     }
 
     public void submitFoodIntake(View view){
@@ -819,14 +801,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         servingsSpinner = findViewById(R.id.servingsSpinner);
 
 
-
-
-
-
-
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString(); //name of food user selected from TOP spinner
-        int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString()); //num of servings the user chose from SERVINGS spinner
-
+        int servingSpinnerVal = Integer.parseInt(servingsSpinner.getSelectedItem().toString().substring(0,1)); //num of servings the user chose from SERVINGS spinner
 
 
         databaseHelper.insertFoodIntake(currentUsername, dateString, foodSpinnerVal, servingSpinnerVal, databaseHelper.calculateCalories(foodSpinnerVal, servingSpinnerVal));
