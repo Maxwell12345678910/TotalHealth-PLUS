@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class MainDashboard extends Fragment implements Runnable {
-    int setCalGoal = 2000;
+public class MainDashboard extends Fragment {
+    int setCalGoal;
     TextView curCalsDisp;
     TextView goalCalsDisp;
     int totalProgress = 0; // Track the total progress separately
@@ -42,7 +42,6 @@ public class MainDashboard extends Fragment implements Runnable {
         progressBar = view.findViewById(R.id.progBar);
         curCalsDisp = view.findViewById(R.id.curCalDisp); //left text
         goalCalsDisp = view.findViewById(R.id.calGoalDisp); // right text
-        updateProgressBar(0);
         progressBar.setMax(setCalGoal);//init default vals
         goalCalsDisp.setText(String.valueOf(setCalGoal));
 
@@ -78,11 +77,6 @@ public class MainDashboard extends Fragment implements Runnable {
     }
 
 
-    public void updateProgressBar2() {
-        totalProgress+= 50; // Increment the total progress by 50
-        progressBar.setProgress(totalProgress);
-        curCalsDisp.setText(String.valueOf(totalProgress));
-    }
 
 
 
@@ -128,11 +122,5 @@ public class MainDashboard extends Fragment implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        int calorieCount = 0;
-        calorieCount = databaseHelper.calculateFoodCalsDay(currentUsername, dateString);
-        calorieCount -= databaseHelper.calculateExerciseCalsDay(currentUsername, dateString);
-        updateProgressBar(calorieCount);
-    }
+
 }
