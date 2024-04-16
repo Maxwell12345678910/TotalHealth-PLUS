@@ -18,9 +18,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class MainDashboard extends Fragment {
-    int setCalGoal;
+    int setCalGoal = 2000;
     TextView curCalsDisp;
     TextView goalCalsDisp;
     int totalProgress = 0; // Track the total progress separately
@@ -42,6 +45,9 @@ public class MainDashboard extends Fragment {
         progressBar = view.findViewById(R.id.progBar);
         curCalsDisp = view.findViewById(R.id.curCalDisp); //left text
         goalCalsDisp = view.findViewById(R.id.calGoalDisp); // right text
+
+        setCalGoal = databaseHelper.getCurrentCalGoal(currentUsername);
+
         progressBar.setMax(setCalGoal);//init default vals
         goalCalsDisp.setText(String.valueOf(setCalGoal));
 
@@ -98,6 +104,14 @@ public class MainDashboard extends Fragment {
                 setCalGoal = Integer.parseInt(userInput);
                 progressBar.setMax(Integer.parseInt(userInput));
                 goalCalsDisp.setText(userInput);
+                //NEED TO INSERT THE GOAL INTO THE PREV GOALS TABLE
+                // Create a Date object representing the current date and time
+                Date currentDate = new Date();
+                // Define a date format with only the date fields
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                // Format the Date object to a String using the defined format
+                String dateString = dateFormat.format(currentDate);
+                databaseHelper.insertCalorieGoal(currentUsername,dateString,setCalGoal );
             } else {
                 // if the user inputs a non-number then display error
                 Toast.makeText(getActivity(), "Invalid input. Please enter a positive number.", Toast.LENGTH_SHORT).show();

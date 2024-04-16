@@ -479,5 +479,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return grams;
     }
 
+    @SuppressLint("Range")
+    public int getCurrentCalGoal(String username) {
+        int currentCalGoal = 0;
+
+        // Build the query to retrieve the most recent goal entry for the specified user
+        String query = "SELECT Goal FROM prev_goals_met WHERE Username = ? ORDER BY Date DESC";
+
+        SQLiteDatabase database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(query, new String[]{username});
+
+        // Check if the cursor has data
+        if (cursor.moveToFirst()) {
+            // Extract the goal value from the cursor
+            currentCalGoal = cursor.getInt(cursor.getColumnIndex("Goal"));
+        }
+
+        // Close the cursor and database
+        cursor.close();
+        database.close();
+
+        // Return the current calorie goal
+        return currentCalGoal;
+    }
 
 }
