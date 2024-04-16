@@ -17,7 +17,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalSetButton" />
+        app:layout_constraintTop_toBottomOf="@+id/goalSetButton"
+        android:textColor="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_green_dark"
+        app:strokeWidth="2dp"/>
 
     <ProgressBar
         android:id="@+id/progBar"
@@ -27,7 +31,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        />
 
     <TextView
         android:id="@+id/textView10"
@@ -48,7 +53,11 @@
         android:text="Set Today's CalorieGoal "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progBar" />
+        app:layout_constraintTop_toBottomOf="@+id/progBar"
+        android:textColor="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_green_dark"
+        app:strokeWidth="2dp"/>
 
     <TextView
         android:id="@+id/textView12"

@@ -17,7 +17,9 @@
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_green_light"/>
 
     <Button
         android:id="@+id/button2"
@@ -29,7 +31,9 @@
         android:text="Browse Food Library"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_green_light"/>
 
     <Button
         android:id="@+id/button3"
@@ -41,7 +45,9 @@
         android:text="Previous Nutrition Record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@android:color/holo_green_light"/>
 
     <TextView
         android:id="@+id/textView"

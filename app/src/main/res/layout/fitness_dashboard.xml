@@ -15,7 +15,11 @@
         android:text="Add physical activity for the day"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <Button
         android:id="@+id/button3"
@@ -27,7 +31,11 @@
         android:text="Previous Exercise Activities"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <Button
         android:id="@+id/button2"
@@ -39,7 +47,11 @@
         android:onClick="seeFitnessBrowse"
         android:text="Browse Exercise Library"
         app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <TextView
         android:id="@+id/textView"
