@@ -11,7 +11,7 @@
         android:layout_width="256dp"
         android:layout_height="48dp"
         android:layout_marginBottom="20dp"
-        android:onClick="seeAddFitness"
+        android:onClick="seeAddCompletedExercise"
         android:text="Add physical activity for the day"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"

@@ -40,6 +40,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , GoalAdapter.OnItemClickListener{
 
+    Spinner minutesSpinner;
     private Spinner foodSpinner; //need this global for dynamic use of below vars
     Spinner servingsSpinner;//populating this dynamically now
     Spinner exerciseSpinner; //populating this dynamically now
@@ -503,11 +504,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
     }
-    public void seeAddFitness(View v){
-        setContentView(R.layout.add_completed_exercise);
 
-        populateSpinnersExercise();
-    }
     public void seeFitnessBrowse(View v){
         setContentView(R.layout.fitness_browse);
     }
@@ -647,6 +644,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     }
 
+    public void seeAddCompletedExercise(View v){
+        setContentView(R.layout.fitness_add_completed_exercise);
+
+        //set an onclick listener for the exercise spinner so we can dynamilcally populate the minutes spinner below it after the user selects an exercise
+        exerciseSpinner = findViewById(R.id.exerciseSpinner);
+        exerciseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                populateMinutesSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { //do nothing
+            }
+        });
+
+        populateSpinnersExercise();
+    }
+
+
+
     public void seeAddFoodIntake(View v){
 
         setContentView(R.layout.food_add_today_intake);
@@ -664,7 +682,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case when nothing is selected
             }
         });
         populateSpinnersFood();
@@ -749,17 +766,43 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         spinner.setAdapter(adapter);
     }
 
+    private void populateMinutesSpinner() {
+        minutesSpinner = findViewById(R.id.minutesSpinner);
+        //get the name of the exercise the user selects
+        exerciseSpinner = findViewById(R.id.exerciseSpinner);
+        String selectedExercise = exerciseSpinner.getSelectedItem().toString(); //use to dynamically call cals/min burn
+
+        float burnedCals5 = databaseHelper.calculateActivityBurned(selectedExercise, 5);
+        float burnedCals10 = databaseHelper.calculateActivityBurned(selectedExercise, 10);
+        float burnedCals20 = databaseHelper.calculateActivityBurned(selectedExercise, 20);
+        float burnedCals30 = databaseHelper.calculateActivityBurned(selectedExercise, 30);
+        float burnedCals60 = databaseHelper.calculateActivityBurned(selectedExercise, 60);
+        float burnedCals120 = databaseHelper.calculateActivityBurned(selectedExercise, 120);
+
+
+
+        String[] minuteIncrements =
+                {
+                    "005" + " minutes : " + burnedCals5 + " cals burned" ,
+                    "010" + " minutes : " + burnedCals10 + " cals burned" ,
+                    "020" + " minutes : " + burnedCals20 + " cals burned" ,
+                    "030" + " minutes : " + burnedCals30 + " cals burned" ,
+                    "060" + " minutes : " + burnedCals60 + " cals burned" ,
+                    "090" + " minutes : " + databaseHelper.calculateActivityBurned(selectedExercise,90) + " cals burned" ,
+                    "120" + " minutes : " + burnedCals120 + " cals burned" ,
+                };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,minuteIncrements);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minutesSpinner.setAdapter(adapter);
+    }
+
     public void populateServingsSpinner() {
         servingsSpinner = findViewById(R.id.servingsSpinner);
         String foodSpinnerVal = foodSpinner.getSelectedItem().toString(); //name of food user selected from TOP spinner
 
-        //get the number of grams per
-        float grams = databaseHelper.calculateGrams(1,foodSpinnerVal);
-        String resultS= "" + grams;
-
-
-
-        Log.d("RESULT WAS:", resultS);
+        //get the number of grams per 1 serving next line is just an example but after that i use this calculation to populate the string array for dropdown menu items
+        //float grams = databaseHelper.calculateGrams(1,foodSpinnerVal);
         String[] servingIncrements = {"1 Serving - " + "   " + databaseHelper.calculateGrams(1,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,1) + "   cals"
                 , "2 Servings : " + "   " + databaseHelper.calculateGrams(2,foodSpinnerVal) + " grams" + "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,2) + "   cals"
                 , "3 Servings : " + "   " + databaseHelper.calculateGrams(3,foodSpinnerVal) + " grams"+ "  -     " + databaseHelper.calculateCalories(foodSpinnerVal,3) + "   cals"
@@ -846,11 +889,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public void submitExercise(View view){
 
-        Spinner exerciseSpinner = findViewById(R.id.exerciseSpinner);
-        Spinner minutesSpinner = findViewById(R.id.minutesSpinner);
+        exerciseSpinner = findViewById(R.id.exerciseSpinner);
+        minutesSpinner = findViewById(R.id.minutesSpinner);
 
         String exerciseSpinnerVal = exerciseSpinner.getSelectedItem().toString();
-        int minSpinnerVal = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
+//        int minSpinnerVal = Integer.parseInt(minutesSpinner.getSelectedItem().toString()); // WE GOTTA CHANGE THIS TO AN SUBSTRING SO THAT WE ONLY GET THE first 2 or 3 chars (minute value) from the string that popuates the array that fils the minutes spinner
+        int minSpinnerVal = Integer.parseInt(minutesSpinner.getSelectedItem().toString().substring(0, Math.min(minutesSpinner.getSelectedItem().toString().length(), 3))); // Extracting the first 2 or 3 chars (minute value)
+
 
         databaseHelper.insertActivity(currentUsername, dateString, exerciseSpinnerVal, (float) minSpinnerVal, databaseHelper.calculateActivityBurned(exerciseSpinnerVal, minSpinnerVal));
         Toast.makeText(this, "Activity inserted successfully.", Toast.LENGTH_SHORT).show();
