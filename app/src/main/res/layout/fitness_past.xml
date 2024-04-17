@@ -66,11 +66,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="12dp"
-        android:background="#000000"
         android:onClick="seeFitnessDash"
         android:text="Back to Dashboard"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

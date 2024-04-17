@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         // Format the current date as a string
         dateString = formatter.format(currentDate);
+
+
     }
 
     public void createUser(){
@@ -900,6 +902,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         databaseHelper.insertActivity(currentUsername, dateString, exerciseSpinnerVal, (float) minSpinnerVal, databaseHelper.calculateActivityBurned(exerciseSpinnerVal, minSpinnerVal));
         Toast.makeText(this, "Activity inserted successfully.", Toast.LENGTH_SHORT).show();
     }
+
 
 }
 

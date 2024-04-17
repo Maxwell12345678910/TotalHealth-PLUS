@@ -30,7 +30,11 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.819" />
+        app:layout_constraintVertical_bias="0.819"
+        android:textColor="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_green_dark"
+        app:strokeWidth="2dp"/>
 
     <EditText
         android:id="@+id/usernameInput2"

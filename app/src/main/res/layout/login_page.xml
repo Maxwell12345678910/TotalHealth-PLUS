@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageView2000"
+        android:layout_width="403dp"
+        android:layout_height="101dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/thp_logo" />
+
     <EditText
         android:id="@+id/usernameInput2"
         android:layout_width="wrap_content"
@@ -36,7 +46,11 @@
         android:text="Login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordInput2" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordInput2"
+        android:textColor="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_green_dark"
+        app:strokeWidth="2dp"/>
 
     <Button
         android:id="@+id/signUpButton"
@@ -46,5 +60,9 @@
         android:text="Sign Up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/loginButton2"
+        android:textColor="@android:color/holo_green_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_green_dark"
+        app:strokeWidth="2dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

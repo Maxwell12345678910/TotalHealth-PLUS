@@ -11,11 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="#000000"
         android:onClick="seeFitnessDash"
         android:text="Back to Dashboard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <EditText
         android:id="@+id/fitnessLibraryName"
@@ -40,7 +43,11 @@
         android:text="Add to Activity Library"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fitnessLibraryCals" />
+        app:layout_constraintTop_toBottomOf="@+id/fitnessLibraryCals"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <EditText
         android:id="@+id/fitnessLibraryCals"
@@ -54,5 +61,6 @@
         android:text="Calories Burned Per Minute:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fitnessLibraryName" />
+        app:layout_constraintTop_toBottomOf="@+id/fitnessLibraryName"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

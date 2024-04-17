@@ -21,11 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#000000"
         android:onClick="seeMainDash"
         android:text="Back to Main Dashboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <Button
         android:id="@+id/addActivityButton"
@@ -36,7 +39,11 @@
         android:text="Add to today's count"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minutesSpinner" />
+        app:layout_constraintTop_toBottomOf="@+id/minutesSpinner"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 
     <Spinner
         android:id="@+id/exerciseSpinner"
@@ -79,5 +86,9 @@
         android:onClick="seeFitnessDash"
         android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/white"
+        app:strokeColor="@android:color/holo_blue_dark"
+        app:strokeWidth="2dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
