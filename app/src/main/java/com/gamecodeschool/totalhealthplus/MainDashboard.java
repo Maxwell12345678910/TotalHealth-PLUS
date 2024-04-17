@@ -40,7 +40,6 @@ public class MainDashboard extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.main_dashboard, container, false);
 
-
         //set up the progressbar and its text displays
         progressBar = view.findViewById(R.id.progBar);
         curCalsDisp = view.findViewById(R.id.curCalDisp); //left text
@@ -50,7 +49,6 @@ public class MainDashboard extends Fragment {
 
         progressBar.setMax(setCalGoal);//init default vals
         goalCalsDisp.setText(String.valueOf(setCalGoal));
-
 
         //set up the button goalSetButton
         setGoalButton = view.findViewById(R.id.goalSetButton);
@@ -62,20 +60,15 @@ public class MainDashboard extends Fragment {
         });
 
 
-
         int calorieCount = 0;
         calorieCount = databaseHelper.calculateFoodCalsDay(currentUsername, dateString);
         calorieCount -= databaseHelper.calculateExerciseCalsDay(currentUsername, dateString);
         updateProgressBar(calorieCount);
 
         return view;
-
     }
 
-
-    //dont forget to also update the display for the new cur cals
     public void updateProgressBar(int cals) {
-
         totalProgress = cals;
         progressBar.setProgress(totalProgress);
         curCalsDisp.setText(String.valueOf(totalProgress));
